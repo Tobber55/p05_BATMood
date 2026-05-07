@@ -10,3 +10,6 @@ Secured and running droplets:
 - BogdanS    (05-06)
 - AlvinS     (05-03)
 - ThamidurR  (05-05)
+
+alvinS -- 2026-05-07
+    - Added System Blueprint template and filled in basic info
