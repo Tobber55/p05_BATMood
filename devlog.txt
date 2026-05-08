@@ -13,3 +13,6 @@ Secured and running droplets:
 
 alvinS -- 2026-05-07
     - Added System Blueprint template and filled in basic info
+
+alvinS -- 2026-05-08
+    - Updated System Blueprint with more detailed planning of work split and timeline.

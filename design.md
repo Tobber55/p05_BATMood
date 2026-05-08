@@ -4,17 +4,15 @@
 ## project: BATMood Games
 ## Target ship date: {2026-06-xx}
 
----
-
 #### roster:
 
 
 | Name | Email | Primary Role | Secondary Role |
 |---|---|---|---|
-| Thamidur Rahman | thamidurr@nycstudents.net | | |
-| Alvin Sze | alvins44@nycstudents.net | | |
-| Bogdan Sotnikov | bogdans2789@nycstudents.net | | |
-| Matthew Ciu | matthewc691@nycstudents.net | | |
+| Thamidur Rahman | thamidurr@nycstudents.net | PM | Frontend Devo |
+| Alvin Sze | alvins44@nycstudents.net | Database Devo | Backend Devo |
+| Bogdan Sotnikov | bogdans2789@nycstudents.net | Backend Devo | Frontend Devo |
+| Matthew Ciu | matthewc691@nycstudents.net | Frontend Devo | Database Devo |
 
 ---
 
@@ -29,33 +27,33 @@ Entertainment
 
 Who will use this system?
 
-- ____________________________________
-- ____________________________________
+- Friends that want to have a quick, free way to play short party games.
+- People who want to store game stats.
 
 
 ## Why This Project Matters
 
+It will be fun!
 
----
 
 # Minimum Viable Product (MVP) Scope
 
 ## Core Features (Required for Final Submission)
-Features that **must** be completed:
-1. 
-1. 
-1. 
+Features that **must** be completed
+
+1. User accounts to track wins and losses.
+2. Lobbies that authorize player to join if they are part of the game.
+3. One game.
 
 ## Stretch Features (Only if MVP is Complete)
-1. 
-1. 
-1. 
+1. Up to four games. 
+2. Player profile customization.
+3. Game joining without an account
 
 ## Explicit Non-Goals
-
 Features intentionally excluded:
-- 
-- 
+- Bugs.
+
 
 ---
 
@@ -64,25 +62,23 @@ Features intentionally excluded:
 | Layer | Selected Tool |
 |---|---|
 | Backend Framework | Flask |
-| Frontend Framework | tailwind |
+| Frontend Framework | Bootstrap |
 | Database | SQLite |
 | Authentication | Flask sessions |
 
 ## Why This Stack Was Chosen
-{your summary/recap of team discussions here}
-
----
+My team prefers the ease of use and aesthetic of Bootstrap and we have experience with it on multiple projects. SQLite seems relatively cleaner to use with Flask and we have all used it extensively.
 
 # Team Ownership Plan
 
-Each member must own meaningful deliverables.
+Each member must own meaningful deliverables. 
 
 | Team Member | Primary Ownership | Secondary Ownership | Specific Deliverables |
 |---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
-| | | | |
+| Thamidur Rahman | Flask App | | |
+| Alvin Sze | Database | Flask App | |
+| Bogdan Sotnikov | | | |
+| Matthew Ciu | | | |
 
 ---
 
@@ -94,16 +90,6 @@ Each member must own meaningful deliverables.
 
 {Insert your mermaid(or equivalent)-generated diagram here}
 eg...
-```
-Landing Page
-   ↓
-Login / Register
-   ↓
-Dashboard
-   ├── Feature A
-   ├── Feature B
-   └── Profile
-```
 
 ## Key User Stories
 ### eg0
@@ -126,18 +112,17 @@ As a __________, I want to __________ so that...
 {Delineate here your plan for testing each component}
 
 # Timeline
-## Week 1 Goals:
-## Week 2 Goals:
-## Week 3 Goals:
-## Internal Deadlines:
-{List milestones your team has identified, in the order they must be completed. Set a target completion date for each.}
+## Week 1 Goals: Smooth database updates within a game.
+## Week 2 Goals: Player authorization and splitting of games to different domains.
+## Week 3 Goals: Creating rules and displaying games.
+## Internal Deadlines: Front end for each part.
 
 
 # Completion Criteria (_a.k.a._ "Definition of 'Done'")
 Project is considered complete when all of the following are true:
-1.
-1.
-1.
+1. Players can authorize joining into a lobby.
+2. Games can continue and end with player input without issues.
+3. Wins and losses are tracked onto player profiles which can be displayed.
 
 # Open Questions
 {Delineate anything undecided here}
@@ -147,3 +132,4 @@ Project is considered complete when all of the following are true:
 
 # Other
 {Put here anything that did not sensibly fit under above headings. This section will inform evolution of SoftDev.}
+
