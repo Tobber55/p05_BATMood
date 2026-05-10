@@ -67,7 +67,7 @@ Features intentionally excluded:
 | Authentication | Flask sessions |
 
 ## Why This Stack Was Chosen
-My team prefers the ease of use and aesthetic of Bootstrap and we have experience with it on multiple projects. SQLite seems relatively cleaner to use with Flask and we have all used it extensively.
+My team prefers the ease of use and aesthetic possibilities of Bootstrap and we have experience with it on multiple projects. SQLite seems relatively cleaner to use with Flask and we have all used it extensively.
 
 # Team Ownership Plan
 
@@ -75,41 +75,53 @@ Each member must own meaningful deliverables.
 
 | Team Member | Primary Ownership | Secondary Ownership | Specific Deliverables |
 |---|---|---|---|
-| Thamidur Rahman | Flask App | | |
-| Alvin Sze | Database | Flask App | |
-| Bogdan Sotnikov | | | |
-| Matthew Ciu | | | |
+| Thamidur Rahman | Flask App | Game Script | Plan for unique game and how it will be implemented. |
+| Alvin Sze | Database | Game Script | Database to store player info and authenticate. |
+| Bogdan Sotnikov | Flask App | JS | System to house multiple links for different lobbies. |
+| Matthew Ciu | CSS | HTML | |
 
 ---
 
 # Component map
 
-{Insert your mermaid(or equivalent)-generated diagram here}
+<img width="975" height="460" alt="image" src="https://github.com/user-attachments/assets/0b7da6ab-8032-41ff-9c92-0693bb751d0c" />
+
 
 # Site map
 
-{Insert your mermaid(or equivalent)-generated diagram here}
-eg...
+<img width="349" height="711" alt="image" src="https://github.com/user-attachments/assets/6820bffe-f7d8-467e-ac43-05884ad7444d" />
+
 
 ## Key User Stories
-### eg0
-As a __________, I want to __________ so that...
 
-### eg1
-As a __________, I want to __________ so that...
+At a party I want a site that allows me to quickly host a game that anyone with internet connection can join easily.
 
-### eg2
-As a __________, I want to __________ so that...
+As a player I want to compete with others and see how others perform. 
 
 
 
 # Database Design
 
-{Insert your table/document organizational structure here}
+| player | String |PK |
+|---|---|---|
+| password | String | |
+| wins | int | |
+| losses | int | |
+
+| serverID | String |PK |
+|---|---|---|
+| password | String | |
+| gameID | int | |
+| player1 | String | |
+| player2 | String | |
+| player3 | String | |
+| player4 | String | |
+| player5 | String | |
+| player6 | String | |
 
 
 # Testing Plan
-{Delineate here your plan for testing each component}
+We will be sure to test that only authorized users can enter in specific links.
 
 # Timeline
 ## Week 1 Goals: Smooth database updates within a game.
@@ -125,10 +137,10 @@ Project is considered complete when all of the following are true:
 3. Wins and losses are tracked onto player profiles which can be displayed.
 
 # Open Questions
-{Delineate anything undecided here}
+We are unsure if all games will be of our own design.
 
 # Appendix
-{Any relevant info that is useful but would have interrupted narrative flow above, or cluttered the information portrayed}
+Current inspirations: Imposter, Tapple, 
 
 # Other
 {Put here anything that did not sensibly fit under above headings. This section will inform evolution of SoftDev.}
