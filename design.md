@@ -21,7 +21,7 @@
 Inspired by Jackbox Games Party Packs, our site allows users to play party games together. 
 
 ## Problem Being Solved
-Entertainment
+Lack of entertainment and bad vibes.
 
 ## Target Users
 
@@ -67,7 +67,7 @@ Features intentionally excluded:
 | Authentication | Flask sessions |
 
 ## Why This Stack Was Chosen
-My team prefers the ease of use and aesthetic possibilities of Bootstrap and we have experience with it on multiple projects. SQLite seems relatively cleaner to use with Flask and we have all used it extensively.
+Our team prefers the ease of use and aesthetic possibilities of Bootstrap and we have experience with it on multiple projects. SQLite seems relatively cleaner to use with Flask and we have all used it extensively.
 
 # Team Ownership Plan
 
@@ -96,7 +96,7 @@ Each member must own meaningful deliverables.
 
 At a party I want a site that allows me to quickly host a game that anyone with internet connection can join easily.
 
-As a player I want to compete with others and see how others perform. 
+As a player I want to compete with others, see how others perform, and see how they've performed in the past. 
 
 
 
@@ -140,7 +140,7 @@ Project is considered complete when all of the following are true:
 We are unsure if all games will be of our own design.
 
 # Appendix
-Current inspirations: Imposter, Tapple, 
+Current inspirations: Jackbox, Imposter, Tapple, 
 
 # Other
 {Put here anything that did not sensibly fit under above headings. This section will inform evolution of SoftDev.}
