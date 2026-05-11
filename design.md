@@ -2,7 +2,7 @@
 
 ## TNPG: BATMood
 ## project: BATMood Games
-## Target ship date: {2026-06-xx}
+## Target ship date: 2026-06-08
 
 #### roster:
 
@@ -143,5 +143,5 @@ We are unsure if all games will be of our own design.
 Current inspirations: Jackbox, Imposter, Tapple, 
 
 # Other
-{Put here anything that did not sensibly fit under above headings. This section will inform evolution of SoftDev.}
+We love this assignment!
 
