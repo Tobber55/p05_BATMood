@@ -1,10 +1,10 @@
 # System Blueprint (_a.k.a._ "Design Doc")
 
 ## TNPG: BATMood
-## project: BATMood Games
-## Target ship date: 2026-06-08
+## Project: BATMood Games
+## Target ship date: 2026-05-26
 
-#### roster:
+#### Roster:
 
 
 | Name | Email | Primary Role | Secondary Role |
@@ -18,7 +18,7 @@
 
 
 # Summary
-Inspired by Jackbox Games Party Packs, our site allows users to play party games together. 
+Inspired by Jackbox Games Party Packs, our site allows users to play party games together. They will be mostly word based where players submit words independently and react to other players' submissions. Lobbies will be entered using a code, like Kahoot.
 
 ## Problem Being Solved
 Lack of entertainment and bad vibes.
@@ -30,6 +30,7 @@ Who will use this system?
 - Friends that want to have a quick, free way to play short party games.
 - People who want to store game stats.
 
+<br>
 
 ## Why This Project Matters
 
@@ -43,7 +44,7 @@ Features that **must** be completed
 
 1. User accounts to track wins and losses.
 2. Lobbies that authorize player to join if they are part of the game.
-3. One game.
+3. One game, beginning with Imposter. 
 
 ## Stretch Features (Only if MVP is Complete)
 1. Up to four games. 
@@ -53,6 +54,7 @@ Features that **must** be completed
 ## Explicit Non-Goals
 Features intentionally excluded:
 - Bugs.
+- There will be a player limit that may be editted.
 
 
 ---
@@ -71,7 +73,6 @@ Our team prefers the ease of use and aesthetic possibilities of Bootstrap and we
 
 # Team Ownership Plan
 
-Each member must own meaningful deliverables. 
 
 | Team Member | Primary Ownership | Secondary Ownership | Specific Deliverables |
 |---|---|---|---|
@@ -96,28 +97,29 @@ Each member must own meaningful deliverables.
 
 At a party I want a site that allows me to quickly host a game that anyone with internet connection can join easily.
 
-As a player I want to compete with others, see how others perform, and see how they've performed in the past. 
-
+As a player I want to compete with others, see how others perform, and see how they've performed in the past.  
 
 
 # Database Design
 
-| player | String |PK |
+| PLAYER DB | TYPE | |
 |---|---|---|
-| password | String | |
-| wins | int | |
-| losses | int | |
+| player | TEXT |PK |
+| password | TEXT | |
+| wins | INT | |
+| losses | INT | |
 
-| serverID | String |PK |
+| SERVER DB | TYPE | |
 |---|---|---|
-| password | String | |
-| gameID | int | |
-| player1 | String | |
-| player2 | String | |
-| player3 | String | |
-| player4 | String | |
-| player5 | String | |
-| player6 | String | |
+| serverID | TEXT |PK |
+| password | TEXT | |
+| gameID | INT | |
+| player1 | TEXT | |
+| player2 | TEXT | |
+| player3 | TEXT | |
+| player4 | TEXT | |
+| player5 | TEXT | |
+| player6 | TEXT | |
 
 
 # Testing Plan
@@ -125,7 +127,7 @@ We will be sure to test that only authorized users can enter in specific links.
 
 # Timeline
 ## Week 1 Goals: Smooth database updates within a game.
-## Week 2 Goals: Player authorization and splitting of games to different domains.
+## Week 2 Goals: Player authorization and splitting of lobbies to different routes.
 ## Week 3 Goals: Creating rules and displaying games.
 ## Internal Deadlines: Front end for each part.
 
@@ -140,8 +142,7 @@ Project is considered complete when all of the following are true:
 We are unsure if all games will be of our own design.
 
 # Appendix
-Current inspirations: Jackbox, Imposter, Tapple, 
+Current inspirations: Jackbox, Imposter, Tapple.
 
 # Other
 We love this assignment!
-

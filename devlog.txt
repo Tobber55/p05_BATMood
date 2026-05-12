@@ -16,3 +16,6 @@ alvinS -- 2026-05-07
 
 alvinS -- 2026-05-08
     - Updated System Blueprint with more detailed planning of work split and timeline.
+
+alvinS -- 2026-05-12
+    - Updated System Blueprint and added the pdf with correct formatting. 
