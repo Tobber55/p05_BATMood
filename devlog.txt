@@ -14,8 +14,11 @@ Secured and running droplets:
 alvinS -- 2026-05-07
     - Added System Blueprint template and filled in basic info
 
-alvinS -- 2026-05-08
+alvinS -- 2026-05-08 11:36
     - Updated System Blueprint with more detailed planning of work split and timeline.
 
-alvinS -- 2026-05-12
+alvinS -- 2026-05-12 11:46
     - Updated System Blueprint and added the pdf with correct formatting. 
+
+alvinS -- 2026-05-12 12:34
+    - Made initial files to start making imposter minigame.
