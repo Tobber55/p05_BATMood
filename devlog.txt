@@ -31,3 +31,6 @@ alvinS -- 2026-05-12 21:20
     - Javascript Style Guide: All functions currently defined (lines 1 and 5) are properly named with camel case, and that 
     should be kept consistent throughout. I like that the guides make standards clear so that things like not using /* */ for
     multi line comments are taught (which I did not know).
+
+alvins -- 2026-05-13 11:39
+    - Created databases and made seperate python file for helper functions

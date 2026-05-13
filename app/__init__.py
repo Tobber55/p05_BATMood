@@ -2,9 +2,12 @@ import sqlite3
 import random
 from flask import Flask, render_template, session, request, redirect
 import os
+from utility import *
 
 app = Flask(__name__)
 app.secret_key = os.urandom(12)
+
+initiate_data()
 
 @app.route('/', methods=["GET", "POST"])
 def home():
