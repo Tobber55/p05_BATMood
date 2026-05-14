@@ -30,12 +30,31 @@ def imposter():
 
 @app.route('/lobby/<g_id>', methods=["GET", "POST"])
 def lobby(g_id):
-    data = fetch("games", f"serverid={g_id}", "*") 
+    data = fetch("games", f"serverid={g_id}", "*")
     print(data)
     if (len(data) > 0):
         return render_template("lobby.html", ID=g_id)
     else:
         return redirect("/")
+
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    if request.method == 'POST':
+        if not request.form['username'] in usernames:
+            return render_template("login.html",
+                error="Wrong &nbsp username &nbsp or &nbsp password!<br><br>",
+                normal=True)
+        elif request.form['password'] != fetch("players", "username = ?", "password", (request.form['username'],))[0][0]:
+                return render_template("login.html",
+                    error="Wrong &nbsp username &nbsp or &nbsp password!<br><br>",
+                    normal=True)
+        else:
+            session["u_rowid"] = fetch("user_base", "username = ?", "rowid", (request.form['username'],))[0]
+    if 'u_rowid' in session:
+        return redirect("/")
+    session.clear()
+
+    return render_template("login.html")
 
 if __name__ == "__main__":
     app.debug = False
