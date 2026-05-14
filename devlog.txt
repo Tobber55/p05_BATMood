@@ -46,3 +46,6 @@ matthewc -- 2026-05-14 11:46
 
 alvinS -- 2026-05-14 11:47
     - Changed database for servers and updated new game route.
+
+alvinS -- 2026-05-14 12:33
+    - Flask app passes data to javascript to display proper role and category on imposter page.

@@ -1,5 +1,5 @@
-function mouseDown() {
-  document.getElementById("role").innerHTML = "IMPOSTER";
+function mouseDown(word) {
+  document.getElementById("role").innerHTML = word;
 }
 
 function mouseUp() {
