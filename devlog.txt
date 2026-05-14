@@ -34,3 +34,9 @@ alvinS -- 2026-05-12 21:20
 
 alvins -- 2026-05-13 11:39
     - Created databases and made seperate python file for helper functions
+
+bogdanS -- 2026-05-13  11:44
+    - README.md up to spec
+
+bogdanS -- 2026-05-13 21:41
+    - Added the ability to join and host lobbies
