@@ -14,11 +14,10 @@ def fetch(table, criteria, data, params=()):
 def add_game(g_id, p_id):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("INSERT INTO games VALUES (?, 0, ?, '', '', '', '', '')",
+    c.execute("INSERT INTO games VALUES (?, 0, ?, '', '', '', '', '', '', '', '', 'Games', 'Mood')",
               (g_id, p_id))
     db.commit()
     db.close()
-
 
 def initiate_data():
     db = sqlite3.connect("data.db")
@@ -44,8 +43,13 @@ def initiate_data():
             player2 TEXT,
             player3 TEXT,
             player4 TEXT,
-            player5 TEXT,
-            player6 TEXT
+            input1 TEXT,
+            input2 TEXT,
+            input3 TEXT,
+            input4 TEXT,
+            inputLog TEXT,
+            category TEXT,
+            word TEXT
         )""")
 
     db.commit()
