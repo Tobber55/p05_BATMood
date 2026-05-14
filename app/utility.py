@@ -1,5 +1,8 @@
+import sqlite3
+DB_FILE = "data.db"
+
 def fetch(table, criteria, data, params=()):
-    db = get_db()
+    db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     query = f"SELECT {data} FROM {table} WHERE {criteria}"
     c.execute(query, params)
@@ -7,6 +10,14 @@ def fetch(table, criteria, data, params=()):
     db.commit()
     db.close()
     return data
+
+def add_game(g_id, p_id):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("INSERT INTO games VALUES (?, 0, ?, '', '', '', '', '')",
+              (g_id, p_id))
+    db.commit()
+    db.close()
 
 
 def initiate_data():
@@ -27,7 +38,7 @@ def initiate_data():
 
     c.execute("""
         CREATE TABLE IF NOT EXISTS games(
-            serverID TEXT UNIQUE,
+            serverID INT UNIQUE,
             gameID INT,
             player1 TEXT,
             player2 TEXT,
