@@ -11,6 +11,21 @@ def fetch(table, criteria, data, params=()):
     db.close()
     return data
 
+def create_user(username, password):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT username FROM players")
+    list = [username[0] for username in c.fetchall()]
+    if not username in list:
+        c.execute("INSERT INTO players VALUES (?, ?, ?, ?, ?)",(username, password, 0, 0, 0))
+        db.commit()
+        db.close()
+        return True
+    db.commit()
+    db.close()
+    return False
+
+
 def add_game(g_id, p_id):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
