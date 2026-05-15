@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html onmouseup="mouseUp()">
   <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="../static/js/imposter.js"></script>
     <title>IMPOSTER</title>
-    <div onmousedown="mouseDown()" onmouseup="mouseUp()" class="card" style="width: 18rem; margin: auto">
+    <script> var word = {{ word | tojson }}</script>
+    <div onmousedown="mouseDown(word)" class="card" style="width: 18rem; margin: auto">
       <div class="card-body">
-        <h5 class="card-title">Category: Animals</h5>
+        <h5 class="card-title">Category: {{ category }}</h5>
         <p id="role" class="card-text"></p>
       </div>
     </div>

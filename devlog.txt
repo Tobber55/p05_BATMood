@@ -40,3 +40,12 @@ bogdanS -- 2026-05-13  11:44
 
 bogdanS -- 2026-05-13 21:41
     - Added the ability to join and host lobbies
+
+matthewc -- 2026-05-14 11:46
+    - working on Bootstrap CSS, specifically centering the host and join elements
+
+alvinS -- 2026-05-14 11:47
+    - Changed database for servers and updated new game route.
+
+alvinS -- 2026-05-14 12:33
+    - Flask app passes data to javascript to display proper role and category on imposter page.

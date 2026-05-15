@@ -24,9 +24,11 @@ def create_game():
     add_game(g_id, "p1")
     return redirect(f"/lobby/{g_id}")
 
-@app.route('/imposter', methods=["GET", "POST"])
-def imposter():
-    return render_template("imposter.html")
+@app.route('/game/<g_id>', methods=["GET", "POST"])
+def game(g_id):
+    data = fetch("games", f"serverid={g_id}", "*")
+    #print(data[0][12])
+    return render_template("imposter.html", category=data[0][11], word=data[0][12])
 
 @app.route('/lobby/<g_id>', methods=["GET", "POST"])
 def lobby(g_id):
