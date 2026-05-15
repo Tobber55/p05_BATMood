@@ -29,7 +29,7 @@ def create_user(username, password):
 def add_game(g_id, p_id):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("INSERT INTO games VALUES (?, 0, ?, '', '', '', '', '', '', '', '', 'Games', 'Mood')",
+    c.execute("INSERT INTO games VALUES (?, 0, ?, '', '', '', '', '', '', '', '', '', 'Mood')",
               (g_id, p_id))
     db.commit()
     db.close()
@@ -45,8 +45,7 @@ def initiate_data():
             username TEXT UNIQUE,
             password TEXT,
             wins INT,
-            losses INT,
-            ingame INT
+            losses INT
         )
         """)
 
@@ -64,7 +63,8 @@ def initiate_data():
             input4 TEXT,
             inputLog TEXT,
             category TEXT,
-            word TEXT
+            word TEXT,
+            specialPlayer TEXT
         )""")
 
     db.commit()
