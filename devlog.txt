@@ -49,3 +49,6 @@ alvinS -- 2026-05-14 11:47
 
 alvinS -- 2026-05-14 12:33
     - Flask app passes data to javascript to display proper role and category on imposter page.
+
+bogdanS -- 2026-05-14 21:37
+    - Added login functionality
