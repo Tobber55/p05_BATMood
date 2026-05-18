@@ -1,16 +1,21 @@
+import random
+
 words = {}
 
-ParseWords()
-
 def ParseWords():
-    temp = ""
     with open('static/word_list.txt') as f:
-        for i in range(len(f)):
-            temp += f[i].strip()
-            print(f[i].strip())
+        lines = [line.strip() for line in f if line.strip()]
 
+    for i in range(0, len(lines) - 1, 2):
+        category = lines[i]
+        category_words = [word.strip() for word in lines[i + 1].split(',')]
+        words[category] = category_words
 
 def RandomizeWord():
-    return ["category", "word"]
+    category = random.choice(list(words.keys()))
+    word = random.choice(words[category])
+    return [category, word]
 
+ParseWords()
+print(RandomizeWord())
 #def DefineRoles(database, word):

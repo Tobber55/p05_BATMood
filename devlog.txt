@@ -59,3 +59,7 @@ bogdanS -- 2026-05-14 21:37
 thamidurR -- 2026-05-14 9:45
     - Finalized and added word list for Imposter.
 
+thamidurR -- 2026-05-17 11:08
+    - Finished ParseWords and RandomizeWord functions.
+
+
