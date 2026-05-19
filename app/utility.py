@@ -17,7 +17,7 @@ def create_user(username, password):
     c.execute("SELECT username FROM players")
     list = [username[0] for username in c.fetchall()]
     if not username in list:
-        c.execute("INSERT INTO players VALUES (?, ?, ?, ?, ?)",(username, password, 0, 0, 0))
+        c.execute("INSERT INTO players VALUES (?, ?, ?, ?)",(username, password, 0, 0))
         db.commit()
         db.close()
         return True
