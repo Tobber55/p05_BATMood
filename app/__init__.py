@@ -35,9 +35,12 @@ def game(g_id):
 @app.route('/lobby/<g_id>', methods=["GET", "POST"])
 def lobby(g_id):
     data = fetch("games", f"serverid={g_id}", "*")
-    print(data)
     if (len(data) > 0):
-        return render_template("lobby.html", ID=g_id)
+        if request.method == 'POST':
+            if "ready" in request.form:
+                if (join_game(session["u_name"], g_id)):
+                    return render_template("lobby.html", ID=g_id, ready=1)
+        return render_template("lobby.html", ID=g_id, ready=0)
     else:
         return redirect("/")
 

@@ -7,6 +7,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   </head>
   <body>
-    YOU ARE IN LOBBY {{ ID }}
+    <p>YOU ARE IN LOBBY {{ ID }}</p>
+    {% if ready is 1 %}
+      <p>YOU ARE READY</p>
+    {% else %}
+      <p>YOU ARE NOT READY</p>
+      <form method='POST' action="/lobby">
+        <button class="btn btn-primary" type="submit" name="ready" id="ready"> Ready up </button>
+      </form>
+    {% endif %}
   </body>
 </html>
