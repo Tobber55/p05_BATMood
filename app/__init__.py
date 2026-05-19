@@ -3,6 +3,7 @@ import random
 from flask import Flask, render_template, session, request, redirect
 import os
 from utility import *
+from game import *
 
 app = Flask(__name__)
 app.secret_key = os.urandom(12)
@@ -23,14 +24,16 @@ def create_game():
     g_id = random.randint(0, 9999)
     while (len(fetch("games", f"serverid={g_id}", "*")) != 0):
         g_id = random.randint(0, 9999)
-    add_game(g_id, "p1")
+    add_game(g_id, session["u_name"])
     return redirect(f"/lobby/{g_id}")
 
 @app.route('/game/<g_id>', methods=["GET", "POST"])
 def game(g_id):
     data = fetch("games", f"serverid={g_id}", "*")
-    #print(data[0][12])
-    return render_template("imposter.html", category=data[0][11], word=data[0][12])
+    if data[0][13] == session["u_name"]:
+        return render_template("imposter.html", category=data[0][11], word="IMPOSTER")
+    else:
+        return render_template("imposter.html", category=data[0][11], word=data[0][12])
 
 @app.route('/lobby/<g_id>', methods=["GET", "POST"])
 def lobby(g_id):

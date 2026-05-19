@@ -1,4 +1,5 @@
 import sqlite3
+from game import *
 DB_FILE = "data.db"
 
 def fetch(table, criteria, data, params=()):
@@ -29,8 +30,9 @@ def create_user(username, password):
 def add_game(g_id, p_id):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("INSERT INTO games VALUES (?, 0, ?, '', '', '', '', '', '', '', '', '', 'Mood', '')",
-              (g_id, p_id))
+    word = RandomizeWord()
+    c.execute("INSERT INTO games VALUES (?, 0, ?, '', '', '', '', '', '', '', '', ?, ?, 'asdf')",
+              (g_id, p_id, word[0], word[1]))
     db.commit()
     db.close()
 

@@ -62,4 +62,7 @@ thamidurR -- 2026-05-14 9:45
 thamidurR -- 2026-05-17 11:08
     - Finished ParseWords and RandomizeWord functions.
 
+alvinS -- 2026-05-19 11:42
+    - Different card for imposters and other players. 
+    - Shows random category and word.
 
