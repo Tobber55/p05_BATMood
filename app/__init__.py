@@ -39,8 +39,12 @@ def lobby(g_id):
         if request.method == 'POST':
             if "ready" in request.form:
                 if (join_game(session["u_name"], g_id)):
-                    return render_template("lobby.html", ID=g_id, ready=True)
-        return render_template("lobby.html", ID=g_id, ready=False)
+                    if (fetch("games", f"serverid={gameid}", "player1")[0][0] == session["u_name"]):
+                        return render_template("lobby.html", ID=g_id, ready=True, host=True)
+                    return render_template("lobby.html", ID=g_id, ready=True, host=False)
+        if (fetch("games", f"serverid={gameid}", "player1")[0][0] == session["u_name"]):
+            return render_template("lobby.html", ID=g_id, ready=True, host=True)
+        return render_template("lobby.html", ID=g_id, ready=False, host=False)
     else:
         return redirect("/")
 

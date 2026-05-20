@@ -16,5 +16,12 @@
         <button class="btn btn-primary" type="submit" value="ready" name="ready" id="ready"> Ready up </button>
       </form>
     {% endif %}
+
+    {% if host %}
+      <p> Thou art der hostenzimmer </p>
+      <form method='POST' action="/lobby/{{ ID }}">
+        <button class="btn btn-primary" type="submit" value="start" name="start" id="start"> Start Game </button>
+      </form>
+    {% endif %}
   </body>
 </html>
