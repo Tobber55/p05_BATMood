@@ -8,12 +8,12 @@
   </head>
   <body>
     <p>YOU ARE IN LOBBY {{ ID }}</p>
-    {% if ready is 1 %}
+    {% if ready %}
       <p>YOU ARE READY</p>
     {% else %}
       <p>YOU ARE NOT READY</p>
-      <form method='POST' action="/lobby">
-        <button class="btn btn-primary" type="submit" name="ready" id="ready"> Ready up </button>
+      <form method='POST' action="/lobby/{{ ID }}">
+        <button class="btn btn-primary" type="submit" value="ready" name="ready" id="ready"> Ready up </button>
       </form>
     {% endif %}
   </body>

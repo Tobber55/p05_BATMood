@@ -23,7 +23,7 @@ def create_game():
     g_id = random.randint(0, 9999)
     while (len(fetch("games", f"serverid={g_id}", "*")) != 0):
         g_id = random.randint(0, 9999)
-    add_game(g_id, "p1")
+    add_game(g_id, session["u_name"])
     return redirect(f"/lobby/{g_id}")
 
 @app.route('/game/<g_id>', methods=["GET", "POST"])
@@ -39,8 +39,8 @@ def lobby(g_id):
         if request.method == 'POST':
             if "ready" in request.form:
                 if (join_game(session["u_name"], g_id)):
-                    return render_template("lobby.html", ID=g_id, ready=1)
-        return render_template("lobby.html", ID=g_id, ready=0)
+                    return render_template("lobby.html", ID=g_id, ready=True)
+        return render_template("lobby.html", ID=g_id, ready=False)
     else:
         return redirect("/")
 
