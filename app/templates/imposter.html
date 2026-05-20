@@ -12,4 +12,21 @@
       </div>
     </div>
   </head>
+  <body>
+    <div class="card" style="width: 18rem;">
+      {%for i in range(0, lenPlayers)%}
+        <div class="card" style="width: 18rem;">
+          <div class="card-header">
+            {{ players[i] }}
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">An item</li>
+            <li class="list-group-item">A second item</li>
+            <li class="list-group-item">A third item</li>
+          </ul>
+        </div>
+      {%endfor%}
+    </div>
+  </body>
+
 </html>

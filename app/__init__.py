@@ -30,10 +30,16 @@ def create_game():
 @app.route('/game/<g_id>', methods=["GET", "POST"])
 def game(g_id):
     data = fetch("games", f"serverid={g_id}", "*")
+    players = []
+    for i in data[0][2:6]:
+        if i != '':
+            players.append(i)
+    log = []
+    
     if data[0][13] == session["u_name"]:
-        return render_template("imposter.html", category=data[0][11], word="IMPOSTER")
+        return render_template("imposter.html", category=data[0][11], word="IMPOSTER", lenPlayers=len(players), players=players, log=log)
     else:
-        return render_template("imposter.html", category=data[0][11], word=data[0][12])
+        return render_template("imposter.html", category=data[0][11], word=data[0][12], lenPlayers=len(players), players=players, log=log)
 
 @app.route('/lobby/<g_id>', methods=["GET", "POST"])
 def lobby(g_id):
