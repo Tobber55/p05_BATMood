@@ -15,8 +15,8 @@ def home():
         if "join" in request.form:
             return redirect(f"/lobby/{request.form['join code']}")
     if 'u_name' in session:
-        return render_template("home.html", user=session["u_name"])
-    return render_template("home.html", user="guest")
+        return render_template("home.html", user=session["u_name"], image="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%2Fid%2FOIP.bPDvdqDn6Y_dpzI7XaS5-AHaHa%3Fpid%3DApi&f=1&ipt=93d7b18a65a202d81aa30c54b09fd4d4a749e321c42fcaf5657d138a96aa3ea7&ipo=images")
+    return render_template("home.html", user="guest", image="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2F474x%2Fae%2Fae%2F25%2Faeae25799b8763a924f5001c6297cf0e.jpg%3Fnii%3Dt&f=1&nofb=1&ipt=a463127ae3c71405a6bcaa6f8b2606c9fd3b859de74153d86a5c9dc2770e3e37")
 
 @app.route('/create', methods=["GET", "POST"])
 def create_game():
@@ -81,6 +81,11 @@ def register():
         else:
             return redirect("/login")
     return render_template("register.html")
+
+@app.route('/profile', methods=["GET", "POST"])
+def profile():
+    if 'u_name' in session:
+        return render_template("/", )
 
 if __name__ == "__main__":
     app.debug = True
