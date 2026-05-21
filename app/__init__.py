@@ -82,11 +82,6 @@ def register():
             return redirect("/login")
     return render_template("register.html")
 
-@app.route('/profile', methods=["GET", "POST"])
-def profile():
-    if 'u_name' in session:
-        return render_template("/", )
-
 if __name__ == "__main__":
     app.debug = True
     app.run(host='0.0.0.0')
