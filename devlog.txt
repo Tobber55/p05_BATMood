@@ -65,3 +65,8 @@ thamidurR -- 2026-05-17 11:08
 bogdanS -- 2026-05-19 11:44
     - Finished 'ready up' functionality
     - Working on transfer from lobby to game, host, and guest functionality
+
+bogdanS -- 2026-05-21 11:28
+    - Added host feature (host is the creator of the lobby and starts the game)
+    - Handing off to Alvin to send everybody to the game
+    - Next on the agenda: guests

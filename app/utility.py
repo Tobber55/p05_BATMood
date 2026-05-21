@@ -28,10 +28,11 @@ def create_user(username, password):
 def join_game(username, gameid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    p1 = fetch("games", f"serverid={gameid}", "player1")[0][0]
-    p2 = fetch("games", f"serverid={gameid}", "player2")[0][0]
-    p3 = fetch("games", f"serverid={gameid}", "player3")[0][0]
-    p4 = fetch("games", f"serverid={gameid}", "player4")[0][0]
+    p1 = fetch("games", f"serverid={gameid}", "player1")[0][0];
+    p2 = fetch("games", f"serverid={gameid}", "player2")[0][0];
+    p3 = fetch("games", f"serverid={gameid}", "player3")[0][0];
+    p4 = fetch("games", f"serverid={gameid}", "player4")[0][0];
+
     if (len(fetch("games", f"serverid={gameid}", "*")) != 0):
         if (p1 == ""):
             c.execute("UPDATE games SET player1 = ? WHERE serverid = ?", (username, gameid))
@@ -53,7 +54,9 @@ def join_game(username, gameid):
             db.commit()
             db.close()
             return True
-    if (username == p1 or username == p2 or username == p3 or username == p4 ):
+    if (username == p1 or username == p2 or username == p3 or username == p4):
+        db.commit()
+        db.close()
         return True
     db.commit()
     db.close()
