@@ -1,13 +1,14 @@
 import sqlite3
 import random
 from flask import Flask, render_template, session, request, redirect
+from flask_socketio import SocketIO, emit, join_room, leave_room, send
 import os
 from utility import *
 from game import *
 
 app = Flask(__name__)
 app.secret_key = os.urandom(12)
-
+socketio = SocketIO(app)
 initiate_data()
 
 @app.route('/', methods=["GET", "POST"])
@@ -35,11 +36,11 @@ def game(g_id):
         if i != '':
             players.append(i)
     log = []
-    
+
     if data[0][13] == session["u_name"]:
-        return render_template("imposter.html", category=data[0][11], word="IMPOSTER", lenPlayers=len(players), players=players, log=log)
+        return render_template("imposter.html", category=data[0][11], word="IMPOSTER", lenPlayers=len(players), players=players, log=log, g_id=g_id)
     else:
-        return render_template("imposter.html", category=data[0][11], word=data[0][12], lenPlayers=len(players), players=players, log=log)
+        return render_template("imposter.html", category=data[0][11], word=data[0][12], lenPlayers=len(players), players=players, log=log, g_id=g_id)
 
 @app.route('/lobby/<g_id>', methods=["GET", "POST"])
 def lobby(g_id):
@@ -88,6 +89,15 @@ def register():
             return redirect("/login")
     return render_template("register.html")
 
+@socketio.on('join_server')
+def join(data):
+    join_room(data)
+
+@socketio.on('leave_server')
+def leave(data):
+    leave_room(data)
+    print("bleh")
+
 if __name__ == "__main__":
     app.debug = True
-    app.run(host='0.0.0.0')
+    socketio.run(app)
