@@ -5,9 +5,11 @@ import os
 from utility import *
 
 app = Flask(__name__)
-app.secret_key = os.urandom(12)
+app.secret_key = os.environ.get('SECRET_KEY', os.urandom(24))
+print(f"Secret key set: {app.secret_key[:10]}...")
 
 initiate_data()
+print("Database initialized")
 
 @app.before_request
 def require_login():
@@ -309,19 +311,28 @@ def game(g_id):
 @app.route('/login', methods=["GET", "POST"])
 def login():
     next_url = request.args.get('next')
+    error = None
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+        username = request.form.get('username', '').strip()
+        password = request.form.get('password', '')
+        print(f"Login attempt: username={username}, password={password[:3]}...")
         user = fetch("players", "username = ?", "*", (username,))
+        print(f"Query result: {user}")
         if user and user[0][1] == password:
             session['u_name'] = username
-            return redirect(next_url) if next_url else redirect(url_for('home'))
+            session.permanent = True
+            print(f"Login successful for {username}, session set")
+            target = next_url if next_url else url_for('home')
+            return redirect(target)
         else:
-            return render_template("login.html", error="Invalid username or password!")
-    return render_template("login.html")
+            error = "Invalid username or password!"
+            print("Login failed: invalid credentials")
+    return render_template("login.html", error=error)
 
 @app.route('/profile')
 def profile():
+    if 'u_name' not in session:
+        return redirect(url_for('login'))
     user_data = fetch("players", "username = ?", "*", (session['u_name'],))
     if user_data:
         wins = user_data[0][2]
@@ -337,9 +348,9 @@ def logout():
 @app.route('/register', methods=["GET", "POST"])
 def register():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        confirm = request.form['confirm']
+        username = request.form.get('username', '').strip()
+        password = request.form.get('password', '')
+        confirm = request.form.get('confirm', '')
         if password != confirm:
             return render_template("register.html", error="Passwords do not match!")
         if create_user(username, password):
@@ -349,5 +360,4 @@ def register():
     return render_template("register.html")
 
 if __name__ == "__main__":
-    app.debug = True
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=5000, debug=False)
