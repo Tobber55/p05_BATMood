@@ -36,7 +36,9 @@
           Log in
         </button>
 
+        {% if error %}
         <p class="text-red-500 text-center text-sm">{{ error|safe }}</p>
+        {% endif %}
       </form>
 
       <div class="text-center mt-4">
