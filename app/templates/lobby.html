@@ -1,27 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>HOME</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  </head>
-  <body>
-    <p>YOU ARE IN LOBBY {{ ID }}</p>
-    {% if ready %}
-      <p>YOU ARE READY</p>
-    {% else %}
-      <p>YOU ARE NOT READY</p>
-      <form method='POST' action="/lobby/{{ ID }}">
-        <button class="btn btn-primary" type="submit" value="ready" name="ready" id="ready"> Ready up </button>
-      </form>
-    {% endif %}
-
-    {% if host %}
-      <p> Thou art der hostenzimmer </p>
-      <form method='POST' action="/lobby/{{ ID }}">
-        <button class="btn btn-primary" type="submit" value="start" name="start" id="start"> Start Game </button>
-      </form>
-    {% endif %}
-  </body>
+    <title>Lobby - {{ ID }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .lobby-card { background: rgba(255,255,255,0.95); border-radius: 20px; padding: 2rem; margin-top: 2rem; }
+        .player-list { list-style: none; padding: 0; }
+        .player-list li { padding: 10px; margin: 5px 0; background: #f0f0f0; border-radius: 10px; display: flex; justify-content: space-between; }
+        .ready { color: green; font-weight: bold; }
+        .not-ready { color: red; }
+        .code { font-size: 2rem; font-weight: bold; text-align: center; background: #333; color: white; padding: 1rem; border-radius: 10px; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    </style>
+    <script>
+        setTimeout(function() { location.reload(); }, 2000);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="lobby-card">
+            <h1 class="text-center mb-4">Game Lobby</h1>
+            <div class="code mb-4">Code: {{ ID }}</div>
+            
+            <h3>Players ({{ players|length }}/6)</h3>
+            <ul class="player-list">
+                {% for player, ready in players %}
+                <li>
+                    {{ player }}
+                    {% if ready %}
+                        <span class="ready">✓ Ready</span>
+                    {% else %}
+                        <span class="not-ready">○ Not Ready</span>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            
+            <div class="text-center mt-4">
+                {% if not is_ready %}
+                <form method="POST" style="display: inline;">
+                    <button type="submit" name="ready" value="ready" class="btn btn-success btn-lg">Ready Up</button>
+                </form>
+                {% else %}
+                <form method="POST" style="display: inline;">
+                    <button type="submit" name="ready" value="ready" class="btn btn-warning btn-lg">Unready</button>
+                </form>
+                {% endif %}
+                
+                {% if host %}
+                <form method="POST" style="display: inline;">
+                    <button type="submit" name="start" value="start" class="btn btn-danger btn-lg" 
+                            {% if not all_ready %}disabled{% endif %}>
+                        Start Game
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="/" class="btn btn-secondary">Leave Lobby</a>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
