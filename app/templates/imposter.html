@@ -7,13 +7,11 @@
     <title>IMPOSTER</title>
     <script>
       var word = {{ word | tojson }};
-      var socket = io();
+      const socket = io();
       socket.emit("join_server", {{ g_id }});
 
-      window.addEventListener('beforeunload', function (e) {
-        socket.emit("leave_server", {{ g_id }})
-          e.preventDefault();
-          e.returnValue = '';
+      socket.on('reload', () => {
+          window.location.reload();
       });
       </script>
     <div onmousedown="mouseDown(word)" class="card" style="width: 18rem; margin: auto">

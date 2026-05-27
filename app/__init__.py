@@ -1,7 +1,7 @@
 import sqlite3
 import random
 from flask import Flask, render_template, session, request, redirect
-from flask_socketio import SocketIO, emit, join_room, leave_room, send
+from flask_socketio import SocketIO, rooms, emit, join_room, leave_room, send
 import os
 from utility import *
 from game import *
@@ -92,11 +92,15 @@ def register():
 @socketio.on('join_server')
 def join(data):
     join_room(data)
+    print(rooms())
 
 @socketio.on('leave_server')
 def leave(data):
-    leave_room(data)
-    print("bleh")
+    join_room(session["u_name"])
+
+@socketio.on('reload')
+def reload(data):
+    emit('reload', room=data)
 
 if __name__ == "__main__":
     app.debug = True

@@ -66,7 +66,11 @@ alvinS -- 2026-05-19 11:42
     - Different card for imposters and other players. 
     - Shows random category and word.
 
-alvinS -- 20265-05-20 11:21
+alvinS -- 2026-05-20 11:21
     - Added cards showing for each player
     - passed player data to html
+
+alvinS -- 2026-05-27 09:25
+    - Added tester for room joining
+    - Added function to reload using IOSockets
 
