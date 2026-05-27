@@ -1,7 +1,6 @@
 import sqlite3
 import json
-import os
-DB_FILE = os.path.join(os.path.dirname(__file__), "data.db")
+DB_FILE = "data.db"
 
 def fetch(table, criteria, data, params=()):
     db = sqlite3.connect(DB_FILE)
