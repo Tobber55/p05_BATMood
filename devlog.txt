@@ -18,17 +18,17 @@ alvinS -- 2026-05-08 11:36
     - Updated System Blueprint with more detailed planning of work split and timeline.
 
 alvinS -- 2026-05-12 11:46
-    - Updated System Blueprint and added the pdf with correct formatting. 
+    - Updated System Blueprint and added the pdf with correct formatting.
 
 alvinS -- 2026-05-12 12:34
     - Made initial files to start making imposter minigame.
 
 alvinS -- 2026-05-12 21:20
-    - Draft for imposter role card. 
+    - Draft for imposter role card.
     - Python Style Guide: I think naming schemes being consistent throughout the project makes our code easier to understand
-    and build upon. It also just looks better. In our project, lines 10 and 14 we need to define how our routes are names and 
+    and build upon. It also just looks better. In our project, lines 10 and 14 we need to define how our routes are names and
     the functions associated with them.
-    - Javascript Style Guide: All functions currently defined (lines 1 and 5) are properly named with camel case, and that 
+    - Javascript Style Guide: All functions currently defined (lines 1 and 5) are properly named with camel case, and that
     should be kept consistent throughout. I like that the guides make standards clear so that things like not using /* */ for
     multi line comments are taught (which I did not know).
 
@@ -66,11 +66,19 @@ alvinS -- 2026-05-19 11:42
     - Different card for imposters and other players. 
     - Shows random category and word.
 
+bogdanS -- 2026-05-19 11:44
+    - Finished 'ready up' functionality
+    - Working on transfer from lobby to game, host, and guest functionality
+
 alvinS -- 2026-05-20 11:21
     - Added cards showing for each player
     - passed player data to html
 
+bogdanS -- 2026-05-21 11:28
+    - Added host feature (host is the creator of the lobby and starts the game)
+    - Handing off to Alvin to send everybody to the game
+    - Next on the agenda: guests
+    
 alvinS -- 2026-05-27 09:25
     - Added tester for room joining
     - Added function to reload using IOSockets
-

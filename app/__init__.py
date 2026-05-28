@@ -17,8 +17,8 @@ def home():
         if "join" in request.form:
             return redirect(f"/lobby/{request.form['join code']}")
     if 'u_name' in session:
-        return render_template("home.html", user=session["u_name"])
-    return render_template("home.html", user="guest")
+        return render_template("home.html", user=session["u_name"], party="/profile", image="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%2Fid%2FOIP.bPDvdqDn6Y_dpzI7XaS5-AHaHa%3Fpid%3DApi&f=1&ipt=93d7b18a65a202d81aa30c54b09fd4d4a749e321c42fcaf5657d138a96aa3ea7&ipo=images")
+    return render_template("home.html", user="guest", party="/login", image="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2F474x%2Fae%2Fae%2F25%2Faeae25799b8763a924f5001c6297cf0e.jpg%3Fnii%3Dt&f=1&nofb=1&ipt=a463127ae3c71405a6bcaa6f8b2606c9fd3b859de74153d86a5c9dc2770e3e37")
 
 @app.route('/create', methods=["GET", "POST"])
 def create_game():
@@ -45,9 +45,16 @@ def game(g_id):
 @app.route('/lobby/<g_id>', methods=["GET", "POST"])
 def lobby(g_id):
     data = fetch("games", f"serverid={g_id}", "*")
-    print(data)
     if (len(data) > 0):
-        return render_template("lobby.html", ID=g_id)
+        if request.method == 'POST':
+            if "ready" in request.form:
+                if (join_game(session["u_name"], g_id)):
+                    if (fetch("games", f"serverid={g_id}", "player1")[0][0] == session["u_name"]):
+                        return render_template("lobby.html", ID=g_id, ready=True, host=True)
+                    return render_template("lobby.html", ID=g_id, ready=True, host=False)
+        if (fetch("games", f"serverid={g_id}", "player1")[0][0] == session["u_name"]):
+            return render_template("lobby.html", ID=g_id, ready=True, host=True)
+        return render_template("lobby.html", ID=g_id, ready=False, host=False)
     else:
         return redirect("/")
 
@@ -68,6 +75,10 @@ def login():
     session.clear()
 
     return render_template("login.html")
+
+@app.route('/profile', methods=["GET", "POST"])
+def profile():
+    return render_template("profile.html")
 
 @app.route('/logout', methods=["GET", "POST"])
 def logout():

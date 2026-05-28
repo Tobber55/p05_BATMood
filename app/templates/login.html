@@ -1,27 +1,48 @@
 <!DOCTYPE html>
+
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>LOGIN</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  </head>
-  <body>
-    <p>{{ error|safe }}</p>
-    <form method='POST' action="/login">
-      <p>
-        USERNAME:
-      </p>
-      <input type="text" name="username" required>
-      <br>
-      <p> PASSWORD: </p>
-      <input type="password" name="password" required>
-      <br><br>
-      <input type="submit" name="sub1" class="sub1" value="Submit">
-    </form>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Login</title>
 
-    <br>
-    
-    <button onclick="location.href='/register'" id="register">Register</button>
+    <style>
+      body {
+        background-image: url('../static/background.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        image-rendering: crisp-edges;
+      }
+    </style>
+  </head>
+  <body class="h-screen flex items-center justify-center">
+    <div class="w-full max-w-sm p-10 rounded-2xl border border-purple-300/50 bg-purple-300/40 backdrop-blur-md shadow-xl">
+      <h1 class="text-2xl font-semibold text-center text-white drop-shadow mb-6">
+        Log In
+      </h1>
+
+      <form action="/login" method="POST" class="flex flex-col space-y-4">
+        <input type="text" name="username" placeholder="Username"
+          class="px-3 py-2 border border-white/40 text-white placeholder-white/70 rounded-lg bg-white/10 focus:ring-2 focus:ring-blue-300 focus:outline-none"
+        >
+
+        <input type="password" name="password" placeholder="Password"
+          class="px-3 py-2 border border-white/40 text-white placeholder-white/70 rounded-lg bg-white/10 focus:ring-2 focus:ring-blue-300 focus:outline-none"
+        >
+
+        <button type="submit" class="bg-blue-600/80 text-white font-medium py-2 rounded-lg hover:bg-blue-700 transition">
+          Log in
+        </button>
+
+        <p class="text-red-500 text-center text-sm">{{ error|safe }}</p>
+      </form>
+
+      <div class="text-center mt-4">
+        <a class="text-white text-sm"> New User? </a>
+        <a href="/register" class="text-blue-200 hover:underline text-sm"> Register</a>
+      </div>
+    </div>
   </body>
 </html>
