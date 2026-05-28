@@ -52,6 +52,8 @@ def lobby(g_id):
                     if (fetch("games", f"serverid={g_id}", "player1")[0][0] == session["u_name"]):
                         return render_template("lobby.html", ID=g_id, ready=True, host=True)
                     return render_template("lobby.html", ID=g_id, ready=True, host=False)
+            if "start" in request.form:
+                return redirect(f"/game/{g_id}")
         if (fetch("games", f"serverid={g_id}", "player1")[0][0] == session["u_name"]):
             return render_template("lobby.html", ID=g_id, ready=True, host=True)
         return render_template("lobby.html", ID=g_id, ready=False, host=False)
