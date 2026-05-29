@@ -87,3 +87,6 @@ alvinS -- 2026-05-28 21:59
     - Added submission during game
     - Chooses first player
     - Parses and displays previous inputs
+
+alvinS -- 2026-05-28 22:45
+    - Better dynamic update of input log

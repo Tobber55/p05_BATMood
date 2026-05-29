@@ -17,6 +17,7 @@
           window.location.reload();
       });
       function reload(){
+        window.history.replaceState(null, null, window.location.href);
         socket.emit("reload", {{ g_id }});
       };
       

@@ -75,6 +75,17 @@ def chooseStartPlayer(g_id):
     db.commit()
     db.close()
 
+def updateTurn(players, g_id):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    last = int(fetch("games", f"serverid={g_id}", "firstPlayer")[0][0])
+    if last == players:
+        c.execute("UPDATE games SET firstPlayer = ? WHERE serverid = ?", (1, g_id))
+    else:
+        c.execute("UPDATE games SET firstPlayer = ? WHERE serverid = ?", (last + 1, g_id))
+    db.commit()
+    db.close()
+
 def updateLog(hint, g_id):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()

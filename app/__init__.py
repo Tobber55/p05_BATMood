@@ -36,8 +36,7 @@ def game(g_id):
         if i != '':
             players.append(i)
     log = []
-    inputs = parseInputLog(g_id)
-    isTurn = players[fetch("games", f"serverid={g_id}", "firstPlayer")[0][0] - 1] == session["u_name"]
+    
     
     if request.method == 'POST':
         if "hint" in request.form:
@@ -48,7 +47,10 @@ def game(g_id):
             log += hint
 
             updateLog(log, g_id)
+            updateTurn(len(players), g_id)
 
+    inputs = parseInputLog(g_id)
+    isTurn = players[fetch("games", f"serverid={g_id}", "firstPlayer")[0][0] - 1] == session["u_name"]
     
     host = fetch("games", f"serverid={g_id}", "player1")[0][0] == session["u_name"]
     if data[0][13] == session["u_name"]:
