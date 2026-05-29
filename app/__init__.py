@@ -7,7 +7,7 @@ from utility import *
 from game import *
 
 app = Flask(__name__)
-app.secret_key = os.urandom(12)
+app.secret_key = "superdupersecret"
 socketio = SocketIO(app)
 initiate_data()
 
@@ -36,11 +36,29 @@ def game(g_id):
         if i != '':
             players.append(i)
     log = []
+    inputs = parseInputLog(g_id)
+    isTurn = players[fetch("games", f"serverid={g_id}", "firstPlayer")[0][0] - 1] == session["u_name"]
+    
+    if request.method == 'POST':
+        if "hint" in request.form:
+            hint = request.form["hint"].replace("\\", "")
+            log = fetch("games", f"serverid={g_id}", "inputLog")[0][0]
 
+            log += "\\" + session["u_name"] + ": "
+            log += hint
+
+            updateLog(log, g_id)
+
+    
+    host = fetch("games", f"serverid={g_id}", "player1")[0][0] == session["u_name"]
     if data[0][13] == session["u_name"]:
-        return render_template("imposter.html", category=data[0][11], word="IMPOSTER", lenPlayers=len(players), players=players, log=log, g_id=g_id)
+        return render_template("imposter.html", category=data[0][11], word="IMPOSTER", 
+                               log=log, g_id=g_id, lenInputs=len(inputs), inputs=inputs, 
+                               isTurn=isTurn, host=host)
     else:
-        return render_template("imposter.html", category=data[0][11], word=data[0][12], lenPlayers=len(players), players=players, log=log, g_id=g_id)
+        return render_template("imposter.html", category=data[0][11], word=data[0][12], 
+                               log=log, g_id=g_id, lenInputs=len(inputs), inputs=inputs, 
+                               isTurn=isTurn, host=host)
 
 @app.route('/lobby/<g_id>', methods=["GET", "POST"])
 def lobby(g_id):
@@ -53,6 +71,7 @@ def lobby(g_id):
                         return render_template("lobby.html", ID=g_id, ready=True, host=True)
                     return render_template("lobby.html", ID=g_id, ready=True, host=False)
             if "start" in request.form:
+                chooseStartPlayer(g_id)
                 return redirect(f"/game/{g_id}")
         if (fetch("games", f"serverid={g_id}", "player1")[0][0] == session["u_name"]):
             return render_template("lobby.html", ID=g_id, ready=True, host=True)
@@ -114,6 +133,10 @@ def leave(data):
 @socketio.on('reload')
 def reload(data):
     emit('reload', room=data)
+
+@socketio.on('joinGame')
+def joinGame(g_id):
+    emit('joinGame', room=g_id)
 
 if __name__ == "__main__":
     app.debug = True

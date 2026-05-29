@@ -82,3 +82,8 @@ bogdanS -- 2026-05-21 11:28
 alvinS -- 2026-05-27 09:25
     - Added tester for room joining
     - Added function to reload using IOSockets
+
+alvinS -- 2026-05-28 21:59
+    - Added submission during game
+    - Chooses first player
+    - Parses and displays previous inputs

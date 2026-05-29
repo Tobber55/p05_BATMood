@@ -1,5 +1,5 @@
 import random
-
+from utility import *
 words = {}
 
 def ParseWords():
@@ -15,6 +15,7 @@ def RandomizeWord():
     category = random.choice(list(words.keys()))
     word = random.choice(words[category])
     return [category, word]
+
 
 ParseWords()
 print(RandomizeWord())

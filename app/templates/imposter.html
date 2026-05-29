@@ -8,11 +8,18 @@
     <script>
       var word = {{ word | tojson }};
       const socket = io();
+      if ("{{ host }}" == "True"){
+        socket.emit("joinGame", {{ g_id }});
+      }
       socket.emit("join_server", {{ g_id }});
 
       socket.on('reload', () => {
           window.location.reload();
       });
+      function reload(){
+        socket.emit("reload", {{ g_id }});
+      };
+      
       </script>
     <div onmousedown="mouseDown(word)" class="card" style="width: 18rem; margin: auto">
       <div class="card-body">
@@ -23,19 +30,25 @@
   </head>
   <body>
     <div class="card" style="width: 18rem;">
-      {%for i in range(0, lenPlayers)%}
-        <div class="card" style="width: 18rem;">
-          <div class="card-header">
-            {{ players[i] }}
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">An item</li>
-            <li class="list-group-item">A second item</li>
-            <li class="list-group-item">A third item</li>
-          </ul>
+      <div class="card" style="width: 18rem;">
+        <div class="card-header">
+          Hint Log
         </div>
-      {%endfor%}
+        <ul class="list-group list-group-flush">
+          {%for i in range(0, lenInputs)%}
+            <li class="list-group-item">{{ inputs[i] }}</li>
+          {%endfor%}
+        </ul>
+      </div>
     </div>
+    {% if isTurn %}
+    <div class="container mx-auto d-flex justify-content-center" style="width: 200px;">
+      <form method='POST' action="/game/{{g_id}}">
+        <input type="text" name="hint" required>
+        <button onclick="reload()" class="btn btn-primary" type="submit" name="submit_hint" id="submit_hint"> Submit </button>
+      </form>
+    </div>
+    {% endif %}
   </body>
 
 </html>

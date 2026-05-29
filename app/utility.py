@@ -63,11 +63,34 @@ def join_game(username, gameid):
     db.close()
     return False
 
+def chooseStartPlayer(g_id):
+    data = fetch("games", f"serverid={g_id}", "*")
+    players = 0
+    for i in data[0][2:6]:
+        if i != '':
+            players += 1
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("UPDATE games SET firstPlayer = ? WHERE serverid = ?", (random.randint(1, players), g_id))
+    db.commit()
+    db.close()
+
+def updateLog(hint, g_id):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("UPDATE games SET inputLog = ? WHERE serverid = ?", (hint, g_id))
+    db.commit()
+    db.close()
+
+def parseInputLog(g_id):
+    inputs = fetch("games", f"serverid={g_id}", "inputLog")[0][0].split("\\")
+    return inputs
+
 def add_game(g_id, p_id):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     word = RandomizeWord()
-    c.execute("INSERT INTO games VALUES (?, 0, ?, '', '', '', '', '', '', '', '', ?, ?, 'asdf')",
+    c.execute("INSERT INTO games VALUES (?, 0, ?, '', '', '', '', '', '', '', '', ?, ?, 'asdf', 0)",
               (g_id, p_id, word[0], word[1]))
     db.commit()
     db.close()
@@ -102,7 +125,8 @@ def initiate_data():
             inputLog TEXT,
             category TEXT,
             word TEXT,
-            specialPlayer TEXT
+            specialPlayer TEXT,
+            firstPlayer INT
         )""")
 
     db.commit()
