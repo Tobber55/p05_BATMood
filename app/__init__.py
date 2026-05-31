@@ -8,7 +8,7 @@ from game import *
 
 app = Flask(__name__)
 app.secret_key = "superdupersecret"
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading')
+socketio = SocketIO(app)
 initiate_data()
 
 @app.route('/', methods=["GET", "POST"])
