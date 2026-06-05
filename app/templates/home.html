@@ -23,6 +23,11 @@
         src: url(OldEnglishGothicPixelRegular-ow2Bo.ttf);
       }
 
+      .custom-button {
+        width: 400px;
+        height: 100px;
+      }
+
     </style>
 
   <body>
@@ -35,14 +40,13 @@
 
       <div>
         <form method='POST' action="/">
-          <input type="text" name="join code" required>
-          <button class="btn btn-primary" type="submit" name="join" id="join"> Join </button>
+          <input class="width: 200px; height: 50px;" type="text" name="join code" required>
+        </br>
+          <button class="btn btn-primary custom-button" type="submit" name="join" id="join"> Join </button>
         </form>
-      </div>
-
-      <div>
+        </br>
         <form action="/create">
-          <button class="btn btn-primary" type="submit" value="Host"> Host </button>
+          <button class="btn btn-primary custom-button" type="submit" value="Host"> Host </button>
         </form>
       </div>
 
