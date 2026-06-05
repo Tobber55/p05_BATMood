@@ -36,8 +36,8 @@ def game(g_id):
         if i != '':
             players.append(i)
     log = []
-    
-    
+
+
     if request.method == 'POST':
         if "hint" in request.form:
             hint = request.form["hint"].replace("\\", "")
@@ -47,20 +47,30 @@ def game(g_id):
             log += hint
 
             updateLog(log, g_id)
-            updateTurn(len(players), g_id)
 
     inputs = parseInputLog(g_id)
     isTurn = players[fetch("games", f"serverid={g_id}", "firstPlayer")[0][0] - 1] == session["u_name"]
-    
-    host = fetch("games", f"serverid={g_id}", "player1")[0][0] == session["u_name"]
+    playerN = 0
+    host = False
+
+    if fetch("games", f"serverid={g_id}", "player1")[0][0] == session["u_name"]:
+        playerN = 1
+        host = True
+    elif fetch("games", f"serverid={g_id}", "player2")[0][0] == session["u_name"]:
+        playerN = 2
+    elif fetch("games", f"serverid={g_id}", "player3")[0][0] == session["u_name"]:
+        playerN = 3
+    elif fetch("games", f"serverid={g_id}", "player4")[0][0] == session["u_name"]:
+        playerN = 4
+
     if data[0][13] == session["u_name"]:
-        return render_template("imposter.html", category=data[0][11], word="IMPOSTER", 
-                               log=log, g_id=g_id, lenInputs=len(inputs), inputs=inputs, 
-                               isTurn=isTurn, host=host)
+        return render_template("imposter.html", category=data[0][11], word="IMPOSTER",
+                               log=log, g_id=g_id, lenInputs=len(inputs), inputs=inputs,
+                               playerN=playerN, host=host)
     else:
-        return render_template("imposter.html", category=data[0][11], word=data[0][12], 
-                               log=log, g_id=g_id, lenInputs=len(inputs), inputs=inputs, 
-                               isTurn=isTurn, host=host)
+        return render_template("imposter.html", category=data[0][11], word=data[0][12],
+                               log=log, g_id=g_id, lenInputs=len(inputs), inputs=inputs,
+                               playerN=playerN, host=host)
 
 @app.route('/lobby/<g_id>', methods=["GET", "POST"])
 def lobby(g_id):
@@ -139,6 +149,14 @@ def reload(data):
 @socketio.on('joinGame')
 def joinGame(g_id):
     emit('joinGame', room=g_id)
+
+@socketio.on('input')
+def input(g_id, input):
+    emit('input', input, room=g_id)
+
+@socketio.on('turn')
+def turn(g_id, turn):
+    emit('turn', turn, room=g_id)
 
 if __name__ == "__main__":
     app.debug = True

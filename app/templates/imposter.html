@@ -8,19 +8,40 @@
     <script>
       var word = {{ word | tojson }};
       const socket = io();
+      var inputLog = "";
+      var turnN = 0;
+      var player = {{ playerN }};
+      console.log({{ host }});
       if ("{{ host }}" == "True"){
         socket.emit("joinGame", {{ g_id }});
       }
       socket.emit("join_server", {{ g_id }});
 
       socket.on('reload', () => {
-          window.location.reload();
+        window.location.reload();
       });
+
+      socket.on('turn', function(turn) => {
+        turnN = turn
+        var submit = document.getElementById('bleh');
+        var html = '''<div class="container mx-auto d-flex justify-content-center" style="width: 200px;">
+      <input id="input" type="text" name="hint" required>
+      <button onclick="input()" class="btn btn-primary" type="submit" name="submit_hint" id="submit_hint"> Submit </button>
+    </div>''';
+        if (player == turn){
+          submit.innerHTML = html;
+        }
+      });
+
       function reload(){
         window.history.replaceState(null, null, window.location.href);
         socket.emit("reload", {{ g_id }});
       };
-      
+
+      function input(){
+        inputLog.concat(document.getElementById('input').text);
+      };
+
       </script>
     <div onmousedown="mouseDown(word)" class="card" style="width: 18rem; margin: auto">
       <div class="card-body">
@@ -42,14 +63,7 @@
         </ul>
       </div>
     </div>
-    {% if isTurn %}
-    <div class="container mx-auto d-flex justify-content-center" style="width: 200px;">
-      <form method='POST' action="/game/{{g_id}}">
-        <input type="text" name="hint" required>
-        <button onclick="reload()" class="btn btn-primary" type="submit" name="submit_hint" id="submit_hint"> Submit </button>
-      </form>
-    </div>
-    {% endif %}
+    <div id="bleh"></div>
   </body>
 
 </html>
