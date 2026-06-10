@@ -71,37 +71,24 @@ def chooseStartPlayer(g_id):
             players += 1
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("UPDATE games SET firstPlayer = ? WHERE serverid = ?", (random.randint(1, players), g_id))
+    playerN = random.randint(1, players)
+    c.execute("UPDATE games SET firstPlayer = ? WHERE serverid = ?", (playerN, g_id))
     db.commit()
     db.close()
+    return playerN
 
-def updateTurn(players, g_id):
+def imposter(user, g_id):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    last = int(fetch("games", f"serverid={g_id}", "firstPlayer")[0][0])
-    if last == players:
-        c.execute("UPDATE games SET firstPlayer = ? WHERE serverid = ?", (1, g_id))
-    else:
-        c.execute("UPDATE games SET firstPlayer = ? WHERE serverid = ?", (last + 1, g_id))
+    c.execute("UPDATE games SET specialPlayer = ? WHERE serverid = ?", (user, g_id))
     db.commit()
     db.close()
-
-def updateLog(hint, g_id):
-    db = sqlite3.connect(DB_FILE)
-    c = db.cursor()
-    c.execute("UPDATE games SET inputLog = ? WHERE serverid = ?", (hint, g_id))
-    db.commit()
-    db.close()
-
-def parseInputLog(g_id):
-    inputs = fetch("games", f"serverid={g_id}", "inputLog")[0][0].split("\\")
-    return inputs
 
 def add_game(g_id, p_id):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     word = RandomizeWord()
-    c.execute("INSERT INTO games VALUES (?, 0, ?, '', '', '', '', '', '', '', '', ?, ?, 'asdf', 0)",
+    c.execute("INSERT INTO games VALUES (?, 0, ?, '', '', '', ?, ?, '', 0)",
               (g_id, p_id, word[0], word[1]))
     db.commit()
     db.close()
@@ -129,11 +116,6 @@ def initiate_data():
             player2 TEXT,
             player3 TEXT,
             player4 TEXT,
-            input1 TEXT,
-            input2 TEXT,
-            input3 TEXT,
-            input4 TEXT,
-            inputLog TEXT,
             category TEXT,
             word TEXT,
             specialPlayer TEXT,

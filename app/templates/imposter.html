@@ -8,42 +8,66 @@
     <script>
       var word = {{ word | tojson }};
       const socket = io();
-      var inputLog = "";
+      var inputLog ="";
       var turnN = 0;
-      var player = {{ playerN }};
-      console.log({{ host }});
-      if ("{{ host }}" == "True"){
-        socket.emit("joinGame", {{ g_id }});
-      }
-      socket.emit("join_server", {{ g_id }});
+      const player = "{{ playerN }}";
+      const user = "{{ username }}";
+      const playerM = "{{ playerM }}";
 
-      socket.on('reload', () => {
-        window.location.reload();
+      window.addEventListener('beforeunload', (event) => {
+          event.preventDefault();
+          event.returnValue = '';
       });
 
-      socket.on('turn', function(turn) => {
-        turnN = turn
+      if (player == "1"){
+        socket.emit("joinGame", {{ g_id }});
+      };
+      socket.emit("join_server", {{ g_id }});
+
+      socket.on('turn', function(turn){
+        turnN = String(turn)
         var submit = document.getElementById('bleh');
-        var html = '''<div class="container mx-auto d-flex justify-content-center" style="width: 200px;">
+        var html = `<div class="container mx-auto d-flex justify-content-center" style="width: 200px;">
       <input id="input" type="text" name="hint" required>
       <button onclick="input()" class="btn btn-primary" type="submit" name="submit_hint" id="submit_hint"> Submit </button>
-    </div>''';
+    </div>`;
         if (player == turn){
           submit.innerHTML = html;
+        } else{
+          submit.innerHTML = "";
         }
       });
 
-      function reload(){
-        window.history.replaceState(null, null, window.location.href);
-        socket.emit("reload", {{ g_id }});
-      };
+      socket.on('input', function(input){
+        document.getElementById('bleh').innerHTML = "";
+        inputLog = input
+        var temp = inputLog.split("\\")
+        var list = document.getElementById('clues');
+        list.innerHTML = temp.map(item => `<li>${item}</li>`).join('');
+      });
 
       function input(){
-        inputLog.concat(document.getElementById('input').text);
+        console.log("asd")
+        var temp = document.getElementById('input').value;
+        temp = temp.replaceAll("\\", "");
+        temp = temp.slice(0, 21);
+        inputLog = inputLog.concat(user);
+        inputLog = inputLog.concat(": ");
+        inputLog = inputLog.concat(temp);
+        inputLog = inputLog.concat("\\");
+        
+        socket.emit("input", {{ g_id }}, String(inputLog));
+        var current = parseInt("{{ playerN }}", 10)
+        if (player == playerM){
+          current = 1
+        } else{
+          current = current + 1
+        }
+        socket.emit("turn", {{ g_id }}, String(current))
       };
 
       </script>
-    <div onmousedown="mouseDown(word)" class="card" style="width: 18rem; margin: auto">
+    <div onmousedown="mouseDown(word)" class="card" style="width: 18rem; margin-right: auto; margin-left: auto; margin-bottom: 40px">
       <div class="card-body">
         <h5 class="card-title">Category: {{ category }}</h5>
         <p id="role" class="card-text"></p>
@@ -51,19 +75,25 @@
     </div>
   </head>
   <body>
-    <div class="card" style="width: 18rem;">
-      <div class="card" style="width: 18rem;">
-        <div class="card-header">
-          Hint Log
+    <div style="display: flex;">
+      <div class="card" style="width: 18rem; margin-right: 80px;">
+        <div class="card" style="width: 18rem;">
+          <div class="card-header" style="list-style-type: none; text-align: center;">
+            Hint Log
+          </div>
+          <ul id="clues" class="list-group list-group-flush" style="margin: auto;"></ul>
         </div>
-        <ul class="list-group list-group-flush">
-          {%for i in range(0, lenInputs)%}
-            <li class="list-group-item">{{ inputs[i] }}</li>
-          {%endfor%}
-        </ul>
       </div>
+      <div id="bleh"></div>
+      <script>
+      if (player == "{{ playerF }}"){
+        console.log("skibidi");
+        document.getElementById('bleh').innerHTML = `<div class="container mx-auto d-flex justify-content-center" style="width: 200px;">
+        <input id="input" type="text" name="hint" required>
+        <button onclick="input()" class="btn btn-primary" type="submit" name="submit_hint" id="submit_hint"> Submit </button>
+      </div>`;
+      };</script>
     </div>
-    <div id="bleh"></div>
   </body>
 
 </html>

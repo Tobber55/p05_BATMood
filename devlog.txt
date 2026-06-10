@@ -90,3 +90,9 @@ alvinS -- 2026-05-28 21:59
 
 alvinS -- 2026-05-28 22:45
     - Better dynamic update of input log
+
+alvinS -- 2026-06-09 20:14
+    - Chooses imposter
+    - Function to change turn
+    - Changed entire system to focus on javascript while in-game instead of database
+    - Function to update all players' HTML to display clues

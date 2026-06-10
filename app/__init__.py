@@ -35,27 +35,21 @@ def game(g_id):
     for i in data[0][2:6]:
         if i != '':
             players.append(i)
-    log = []
 
+    if fetch("games", f"serverid={g_id}", "specialPlayer")[0][0] == "":
+        imp = random.choice(players)
+        imposter(imp, g_id)
 
-    if request.method == 'POST':
-        if "hint" in request.form:
-            hint = request.form["hint"].replace("\\", "")
-            log = fetch("games", f"serverid={g_id}", "inputLog")[0][0]
-
-            log += "\\" + session["u_name"] + ": "
-            log += hint
-
-            updateLog(log, g_id)
-
-    inputs = parseInputLog(g_id)
-    isTurn = players[fetch("games", f"serverid={g_id}", "firstPlayer")[0][0] - 1] == session["u_name"]
     playerN = 0
-    host = False
+    playerF = 0
+    if fetch("games", f"serverid={g_id}", "firstPlayer")[0][0] == "":
+        playerF = chooseStartPlayer(g_id)
+    else:
+        playerF = fetch("games", f"serverid={g_id}", "firstPlayer")[0][0]
+
 
     if fetch("games", f"serverid={g_id}", "player1")[0][0] == session["u_name"]:
         playerN = 1
-        host = True
     elif fetch("games", f"serverid={g_id}", "player2")[0][0] == session["u_name"]:
         playerN = 2
     elif fetch("games", f"serverid={g_id}", "player3")[0][0] == session["u_name"]:
@@ -63,14 +57,14 @@ def game(g_id):
     elif fetch("games", f"serverid={g_id}", "player4")[0][0] == session["u_name"]:
         playerN = 4
 
-    if data[0][13] == session["u_name"]:
-        return render_template("imposter.html", category=data[0][11], word="IMPOSTER",
-                               log=log, g_id=g_id, lenInputs=len(inputs), inputs=inputs,
-                               playerN=playerN, host=host)
+    if data[0][8] == session["u_name"]:
+        return render_template("imposter.html", category=data[0][6], word="YOU ARE THE IMPOSTER",
+                               g_id=g_id,
+                               playerN=playerN, playerF=playerF, username=session["u_name"], playerM=len(players))
     else:
-        return render_template("imposter.html", category=data[0][11], word=data[0][12],
-                               log=log, g_id=g_id, lenInputs=len(inputs), inputs=inputs,
-                               playerN=playerN, host=host)
+        return render_template("imposter.html", category=data[0][6], word=data[0][7],
+                               g_id=g_id,
+                               playerN=playerN, playerF=playerF, username=session["u_name"], playerM=len(players))
 
 @app.route('/lobby/<g_id>', methods=["GET", "POST"])
 def lobby(g_id):
@@ -137,10 +131,6 @@ def register():
 def join(data):
     join_room(data)
     print(rooms())
-
-@socketio.on('leave_server')
-def leave(data):
-    join_room(session["u_name"])
 
 @socketio.on('reload')
 def reload(data):
