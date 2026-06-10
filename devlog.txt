@@ -96,3 +96,8 @@ alvinS -- 2026-06-09 20:14
     - Function to change turn
     - Changed entire system to focus on javascript while in-game instead of database
     - Function to update all players' HTML to display clues
+
+alvinS -- 2026-06-10 00:04
+    - Voting system 
+    - Displays who wins at end of game
+    - Small CSS update

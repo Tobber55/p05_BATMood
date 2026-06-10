@@ -6,9 +6,20 @@
     <title>HOME</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <style>
+      body, html {
+        height: 100%;
+        margin: 0;
+        background-image: url('../static/background_blank.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        font-size: larger;
+        font-weight: bold;
+      }
+    </style>
     <script>
       const socket = io();
-
       socket.on('reload', () => {
           window.location.reload();
       });
@@ -20,22 +31,24 @@
     </script>
   </head>
   <body>
-    <p>YOU ARE IN LOBBY {{ ID }}</p>
-    {% if ready %}
-      <script>socket.emit("join_server", {{ ID }});</script>
-      <p>YOU ARE READY</p>
-    {% else %}
-      <p>YOU ARE NOT READY</p>
-      <form method='POST' action="/lobby/{{ ID }}">
-        <button class="btn btn-primary" type="submit" value="ready" name="ready" id="ready"> Ready up </button>
-      </form>
-    {% endif %}
+    <div class="d-flex align-items-center justify-content-center" style="flex-direction: column; height: 100vh;">
+      <p>YOU ARE IN LOBBY {{ ID }}</p>
+      {% if ready %}
+        <script>socket.emit("join_server", {{ ID }});</script>
+        <p>YOU ARE READY</p>
+      {% else %}
+        <p>YOU ARE NOT READY</p>
+        <form method='POST' action="/lobby/{{ ID }}">
+          <button class="btn btn-primary" type="submit" value="ready" name="ready" id="ready"> Ready up </button>
+        </form>
+      {% endif %}
 
-    {% if host %}
-      <p> Thou art der hostenzimmer </p>
-      <form method='POST' action="/lobby/{{ ID }}">
-        <button class="btn btn-primary" type="submit" value="start" name="start" id="start"> Start Game </button>
-      </form>
-    {% endif %}
+      {% if host %}
+        <p> Thou art der hostenzimmer </p>
+        <form method='POST' action="/lobby/{{ ID }}">
+          <button class="btn btn-primary" type="submit" value="start" name="start" id="start"> Start Game </button>
+        </form>
+      {% endif %}
+    </div>
   </body>
 </html>

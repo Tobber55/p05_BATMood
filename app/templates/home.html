@@ -15,7 +15,7 @@
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        font-family: myFont;
+        font-size: larger;
       }
 
       @font-face {
@@ -31,16 +31,19 @@
     </style>
 
   <body>
-
-    <div class="d-flex align-items-center justify-content-center" style="height: 100vh;">
-
+    
+    <div class="d-flex align-items-center justify-content-center" style="flex-direction: column; height: 100vh;">
+      <div>
+        <form>
+          <a href="{{ party }}" id="my-link"><img border="0" alt="profile" src="{{ image }}" width="100" height"100"></a>
+        </form>
+      </div>
       <div>
         <h1>Hello, {{ user }}!</h1>
       </div>
-
       <div>
-        <form method='POST' action="/">
-          <input class="width: 200px; height: 50px;" type="text" name="join code" required>
+        <form style="text-align: center" method='POST' action="/">
+          <input style="text-align: center" class="width: 200px; height: 70px;" type="number" name="join code" required> 
         </br>
           <button class="btn btn-primary custom-button" type="submit" name="join" id="join"> Join </button>
         </form>
@@ -49,15 +52,8 @@
           <button class="btn btn-primary custom-button" type="submit" value="Host"> Host </button>
         </form>
       </div>
-
     </div>
 
-    <div class="position-absolute top-0 end-0">
-      <form>
-        <a href="{{ party }}" id="my-link"><img border="0" alt="profile" src="{{ image }}" width="100" height"100"></a>
-      </form>
-    </div>
-    <!-- refer to home js -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   </body>
