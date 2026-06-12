@@ -101,3 +101,6 @@ alvinS -- 2026-06-10 00:04
     - Voting system 
     - Displays who wins at end of game
     - Small CSS update
+
+alvins -- 2026-06-12 01:14
+    - Game back to home at end of game

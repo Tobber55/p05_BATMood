@@ -12,6 +12,16 @@ def fetch(table, criteria, data, params=()):
     db.close()
     return data
 
+def exists(table, criteria):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    query = f"SELECT 1 FROM {table} WHERE {criteria} LIMIT 1"
+    c.execute(query)
+    data = c.fetchone() != None
+    db.commit()
+    db.close()
+    return data
+
 def create_user(username, password):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
@@ -90,6 +100,13 @@ def add_game(g_id, p_id):
     word = RandomizeWord()
     c.execute("INSERT INTO games VALUES (?, 0, ?, '', '', '', ?, ?, '', 0)",
               (g_id, p_id, word[0], word[1]))
+    db.commit()
+    db.close()
+
+def remove_game(g_id):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("DELETE FROM games WHERE serverid = ?;", (g_id,))
     db.commit()
     db.close()
 

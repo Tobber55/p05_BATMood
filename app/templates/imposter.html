@@ -36,8 +36,11 @@
       var confirmed = false
       var sus = 0
       window.addEventListener('beforeunload', (event) => {
-          event.preventDefault();
-          event.returnValue = '';
+          if (String(voted) != playerM){
+            event.preventDefault();
+            event.returnValue = '';
+          }
+          
       });
 
       if (player == "1"){
@@ -186,12 +189,42 @@
             socket.emit("gameEnd", {{ g_id }}, Boolean(bleh))
           }
         }
-
+        
+        function home(){
+          window.location.href = '/';
+        };
+        
         socket.on('gameEnd', function(imp){
           if (imp){
-            document.getElementById("all").innerHTML = "IMPOSTER WINS"
+            document.getElementById("all").innerHTML = `<div class="d-flex align-items-center justify-content-center" style="font-weight: bold; font-size: larger; flex-direction: column; height: 100vh;">
+        <p> IMPOSTER WINS! </p>
+        <button onclick="home()" class="btn btn-primary" type="submit"> Home </button>
+    </div>`
+            fetch('/game/{{ g_id }}', {
+              method: "POST",
+              body: JSON.stringify({
+                imp: true
+              }),
+              headers: {
+                "Content-type": "application/json; charset=UTF-8"
+              }
+            })
+              .then((response) => response.json())
           } else{
-            document.getElementById("all").innerHTML = "IMPOSTER WAS CAUGHT"
+            document.getElementById("all").innerHTML = `<div class="d-flex align-items-center justify-content-center" style="font-weight: bold; font-size: larger; flex-direction: column; height: 100vh;">
+        <p> IMPOSTER WAS CAUGHT! </p>
+        <button onclick="home()" class="btn btn-primary" type="submit"> Home </button>
+    </div>`
+            fetch('/game/{{ g_id }}', {
+              method: "POST",
+              body: JSON.stringify({
+                imp: true
+              }),
+              headers: {
+                "Content-type": "application/json; charset=UTF-8"
+              }
+            })
+              .then((response) => response.json())
           }
         });
 

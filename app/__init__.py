@@ -1,6 +1,6 @@
 import sqlite3
 import random
-from flask import Flask, render_template, session, request, redirect
+from flask import Flask, render_template, session, request, redirect, jsonify, url_for
 from flask_socketio import SocketIO, rooms, emit, join_room, leave_room, send
 import os
 from utility import *
@@ -30,37 +30,57 @@ def create_game():
 
 @app.route('/game/<g_id>', methods=["GET", "POST"])
 def game(g_id):
-    data = fetch("games", f"serverid={g_id}", "*")
-    players = []
-    for i in data[0][2:6]:
-        if i != '':
-            players.append(i)
-    log = []
+    if exists("games", f"serverid={g_id}"):
+        data = fetch("games", f"serverid={g_id}", "*")
+        players = []
+        for i in data[0][2:6]:
+            if i != '':
+                players.append(i)
 
+        imp = ""
+        if fetch("games", f"serverid={g_id}", "specialPlayer")[0][0] == "":
+            imp = random.choice(players)
+            imposter(imp, g_id)
+        else:
+            imp = fetch("games", f"serverid={g_id}", "specialPlayer")[0][0]
 
+        playerN = 0
+        playerF = 0
+        if fetch("games", f"serverid={g_id}", "firstPlayer")[0][0] == "":
+            playerF = chooseStartPlayer(g_id)
+        else:
+            playerF = fetch("games", f"serverid={g_id}", "firstPlayer")[0][0]
+
+        one = fetch("games", f"serverid={g_id}", "player1")[0][0]
+        two = fetch("games", f"serverid={g_id}", "player2")[0][0]
+        three = fetch("games", f"serverid={g_id}", "player3")[0][0]
+        four = fetch("games", f"serverid={g_id}", "player4")[0][0]
+
+        if one == session["u_name"]: playerN = 1
+        elif two == session["u_name"]: playerN = 2
+        elif three == session["u_name"]: playerN = 3
+        elif four == session["u_name"]: playerN = 4
+    
     if request.method == 'POST':
-        if "hint" in request.form:
-            hint = request.form["hint"].replace("\\", "")
-            log = fetch("games", f"serverid={g_id}", "inputLog")[0][0]
+        if exists("games", f"serverid={g_id}"):
+            remove_game(str(g_id))
+            if request.get_json()["imp"]:
+                return jsonify({
+                    'success': True,
+                }), 200
+            else:
+                return jsonify({
+                    'success': True,
+                }), 200
 
-            log += "\\" + session["u_name"] + ": "
-            log += hint
-
-            updateLog(log, g_id)
-            updateTurn(len(players), g_id)
-
-    inputs = parseInputLog(g_id)
-    isTurn = players[fetch("games", f"serverid={g_id}", "firstPlayer")[0][0] - 1] == session["u_name"]
-
-    host = fetch("games", f"serverid={g_id}", "player1")[0][0] == session["u_name"]
-    if data[0][13] == session["u_name"]:
-        return render_template("imposter.html", category=data[0][11], word="IMPOSTER",
-                               log=log, g_id=g_id, lenInputs=len(inputs), inputs=inputs,
-                               isTurn=isTurn, host=host)
+    if imp == session["u_name"]:
+        return render_template("imposter.html", category=data[0][6], word="YOU ARE THE IMPOSTER",
+                               g_id=g_id, one=one, two=two, three=three, four=four, imp=imp,
+                               playerN=playerN, playerF=playerF, username=session["u_name"], playerM=len(players))
     else:
-        return render_template("imposter.html", category=data[0][11], word=data[0][12],
-                               log=log, g_id=g_id, lenInputs=len(inputs), inputs=inputs,
-                               isTurn=isTurn, host=host)
+        return render_template("imposter.html", category=data[0][6], word=data[0][7],
+                               g_id=g_id, one=one, two=two, three=three, four=four, imp=imp,
+                               playerN=playerN, playerF=playerF, username=session["u_name"], playerM=len(players))
 
 @app.route('/lobby/<g_id>', methods=["GET", "POST"])
 def lobby(g_id):
@@ -126,11 +146,6 @@ def register():
 @socketio.on('join_server')
 def join(data):
     join_room(data)
-    print(rooms())
-
-@socketio.on('leave_server')
-def leave(data):
-    join_room(session["u_name"])
 
 @socketio.on('reload')
 def reload(data):
@@ -139,6 +154,22 @@ def reload(data):
 @socketio.on('joinGame')
 def joinGame(g_id):
     emit('joinGame', room=g_id)
+
+@socketio.on('input')
+def input(g_id, input):
+    emit('input', input, room=g_id)
+
+@socketio.on('turn')
+def turn(g_id, turn):
+    emit('turn', turn, room=g_id)
+
+@socketio.on("vote")
+def vote(g_id, data):
+    emit('vote', data, room=g_id)
+
+@socketio.on("gameEnd")
+def gameEnd(g_id, imp):
+    emit("gameEnd", imp, room=g_id)
 
 if __name__ == "__main__":
     app.debug = True
