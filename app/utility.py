@@ -94,6 +94,19 @@ def imposter(user, g_id):
     db.commit()
     db.close()
 
+def updateStat(user, win):
+    print("adsgkjhfdsgjdagkjlghfda")
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    if (win):
+        wins = fetch("players", f"username={user}", "wins")
+        c.execute("UPDATE players SET wins = ? WHERE username = ?", (wins, user))
+    else:
+        losses = fetch("players", f"username={user}", "losses")
+        c.execute("UPDATE players SET losses = ? WHERE username = ?", (losses, user))
+    db.commit()
+    db.close()
+
 def add_game(g_id, p_id):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()

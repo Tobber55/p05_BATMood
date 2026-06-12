@@ -40,7 +40,7 @@
             event.preventDefault();
             event.returnValue = '';
           }
-          
+
       });
 
       if (player == "1"){
@@ -79,7 +79,7 @@
         inputLog = inputLog.concat(": ");
         inputLog = inputLog.concat(temp);
         inputLog = inputLog.concat("\\");
-        
+
         socket.emit("input", {{ g_id }}, String(inputLog));
         var current = parseInt("{{ playerN }}", 10)
         if (player == playerM){
@@ -93,7 +93,7 @@
       </script>
     <div onmousedown="mouseDown(word)" class="card" style="width: 18rem; margin-right: auto; margin-left: auto; margin-bottom: 10vh;">
       <div class="card-body">
-        <h5 class="card-title">Category: {{ category }}</h5>
+        <h5 class="card-title">Category: {{ category }} (Hold To Show)</h5>
         <p id="role" class="card-text"></p>
       </div>
     </div>
@@ -117,27 +117,34 @@
           </div>`;
         };
       </script>
-      <div style="margin:auto;"><ul id="vote" class="list-group list-group-flush" style="margin: auto; list-style-type: none;"></ul></div>
+      <div class="card" style="width: 18rem; margin: auto;">
+        <div class="card" style="width: 18rem;">
+          <div class="card-header" style="text-align: center;">
+            Who's Suspicious?
+          </div>
+          <div style="margin:auto;"><ul id="vote" class="list-group list-group-flush" style="margin: auto; list-style-type: none;"></ul></div>
+        </div>
+      </div>
       <script>
         function vote(player){
           if (!confirmed){
             if (sus == 1){onesus -= 1;}
             else if (sus == 2){twosus -= 1;}
             else if (sus == 3){threesus -= 1;}
-            else if (sus == 4){foursus -= 1;} 
+            else if (sus == 4){foursus -= 1;}
 
             if (player == "1"){
               sus = 1;
               onesus += 1;
-            } 
+            }
             else if (player == "2"){
               sus = 2;
               twosus += 1;
-            } 
+            }
             else if (player == "3"){
               sus = 3;
               threesus += 1;
-            } 
+            }
             else if (player == "4"){
               sus = 4;
               foursus += 1;
@@ -189,11 +196,11 @@
             socket.emit("gameEnd", {{ g_id }}, Boolean(bleh))
           }
         }
-        
+
         function home(){
           window.location.href = '/';
         };
-        
+
         socket.on('gameEnd', function(imp){
           if (imp){
             document.getElementById("all").innerHTML = `<div class="d-flex align-items-center justify-content-center" style="font-weight: bold; font-size: larger; flex-direction: column; height: 100vh;">

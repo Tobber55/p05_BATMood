@@ -63,7 +63,7 @@ thamidurR -- 2026-05-17 11:08
     - Finished ParseWords and RandomizeWord functions.
 
 alvinS -- 2026-05-19 11:42
-    - Different card for imposters and other players. 
+    - Different card for imposters and other players.
     - Shows random category and word.
 
 bogdanS -- 2026-05-19 11:44
@@ -78,7 +78,7 @@ bogdanS -- 2026-05-21 11:28
     - Added host feature (host is the creator of the lobby and starts the game)
     - Handing off to Alvin to send everybody to the game
     - Next on the agenda: guests
-    
+
 alvinS -- 2026-05-27 09:25
     - Added tester for room joining
     - Added function to reload using IOSockets
@@ -98,9 +98,13 @@ alvinS -- 2026-06-09 20:14
     - Function to update all players' HTML to display clues
 
 alvinS -- 2026-06-10 00:04
-    - Voting system 
+    - Voting system
     - Displays who wins at end of game
     - Small CSS update
 
 alvins -- 2026-06-12 01:14
     - Game back to home at end of game
+
+alvinS -- 2026-06-12 11:47
+    - Prototype for wins loss tracking
+    - Guest reworked

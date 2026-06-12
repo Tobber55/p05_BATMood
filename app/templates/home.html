@@ -31,7 +31,7 @@
     </style>
 
   <body>
-    
+
     <div class="d-flex align-items-center justify-content-center" style="flex-direction: column; height: 100vh;">
       <div>
         <form>
@@ -40,10 +40,11 @@
       </div>
       <div>
         <h1>Hello, {{ user }}!</h1>
+        <p>Wins: {{ wins }} Losses: {{ losses }}</p>
       </div>
       <div>
         <form style="text-align: center" method='POST' action="/">
-          <input style="text-align: center" class="width: 200px; height: 70px;" type="number" name="join code" required> 
+          <input style="text-align: center" class="width: 200px; height: 70px;" type="number" name="join code" required>
         </br>
           <button class="btn btn-primary custom-button" type="submit" name="join" id="join"> Join </button>
         </form>
@@ -51,6 +52,12 @@
         <form action="/create">
           <button class="btn btn-primary custom-button" type="submit" value="Host"> Host </button>
         </form>
+        </br>
+        {% if  inn %}
+        <form action="/logout">
+          <button class="btn btn-primary custom-button" type="submit"> Logout </button>
+        </form>
+        {% endif %}
       </div>
     </div>
 

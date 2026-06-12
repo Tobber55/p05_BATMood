@@ -15,13 +15,20 @@ initiate_data()
 def home():
     if request.method == 'POST':
         if "join" in request.form:
+            if 'u_name' not in session:
+                return redirect("/login")
             return redirect(f"/lobby/{request.form['join code']}")
     if 'u_name' in session:
-        return render_template("home.html", user=session["u_name"], party="/profile", image="../static/pfp.png")
-    return render_template("home.html", user="guest", party="/login", image="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2F474x%2Fae%2Fae%2F25%2Faeae25799b8763a924f5001c6297cf0e.jpg%3Fnii%3Dt&f=1&nofb=1&ipt=a463127ae3c71405a6bcaa6f8b2606c9fd3b859de74153d86a5c9dc2770e3e37")
+        user = "'" + session['u_name'] + "'"
+        wins = fetch("players", f"username={user}", "wins")[0][0]
+        losses = fetch("players", f"username={user}", "losses")[0][0]
+        return render_template("home.html", user=session["u_name"], party="/", image="../static/pfp.png", wins=wins, losses=losses, inn=True)
+    return render_template("home.html", user="guest", party="/login", image="../static/defaultpfp.jpg", wins="N/A", losses="N/A", inn=False)
 
 @app.route('/create', methods=["GET", "POST"])
 def create_game():
+    if 'u_name' not in session:
+        return redirect("/login")
     g_id = random.randint(0, 9999)
     while (len(fetch("games", f"serverid={g_id}", "*")) != 0):
         g_id = random.randint(0, 9999)
@@ -60,15 +67,24 @@ def game(g_id):
         elif two == session["u_name"]: playerN = 2
         elif three == session["u_name"]: playerN = 3
         elif four == session["u_name"]: playerN = 4
-    
+    else:
+        return redirect("/")
     if request.method == 'POST':
         if exists("games", f"serverid={g_id}"):
             remove_game(str(g_id))
             if request.get_json()["imp"]:
+                if imp == session["u_name"]:
+                    updateStat(session["u_name"], True)
+                else:
+                    updateStat(session["u_name"], False)
                 return jsonify({
                     'success': True,
                 }), 200
             else:
+                if imp == session["u_name"]:
+                    updateStat(session["u_name"], False)
+                else:
+                    updateStat(session["u_name"], True)
                 return jsonify({
                     'success': True,
                 }), 200
@@ -118,10 +134,6 @@ def login():
     session.clear()
 
     return render_template("login.html")
-
-@app.route('/profile', methods=["GET", "POST"])
-def profile():
-    return render_template("profile.html")
 
 @app.route('/logout', methods=["GET", "POST"])
 def logout():
