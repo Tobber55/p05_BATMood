@@ -12,16 +12,6 @@ def fetch(table, criteria, data, params=()):
     db.close()
     return data
 
-def exists(table, criteria):
-    db = sqlite3.connect(DB_FILE)
-    c = db.cursor()
-    query = f"SELECT 1 FROM {table} WHERE {criteria} LIMIT 1"
-    c.execute(query)
-    data = c.fetchone() != None
-    db.commit()
-    db.close()
-    return data
-
 def create_user(username, password):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
@@ -95,15 +85,15 @@ def imposter(user, g_id):
     db.close()
 
 def updateStat(user, win):
-    print("adsgkjhfdsgjdagkjlghfda")
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     if (win):
-        wins = fetch("players", f"username={user}", "wins")
-        c.execute("UPDATE players SET wins = ? WHERE username = ?", (wins, user))
+        print(user + " " + str(win))
+        wins = fetch("players", f"username='{user}'", "wins")[0][0]
+        c.execute("UPDATE players SET wins = ? WHERE username = ?", (wins + 1, user))
     else:
-        losses = fetch("players", f"username={user}", "losses")
-        c.execute("UPDATE players SET losses = ? WHERE username = ?", (losses, user))
+        losses = fetch("players", f"username='{user}'", "losses")[0][0]
+        c.execute("UPDATE players SET losses = ? WHERE username = ?", (losses + 1, user))
     db.commit()
     db.close()
 

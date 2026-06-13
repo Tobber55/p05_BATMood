@@ -35,9 +35,25 @@ def create_game():
     add_game(g_id, session["u_name"])
     return redirect(f"/lobby/{g_id}")
 
+@app.route('/imposterwins/<g_id>')
+def imposterwins(g_id):
+    if fetch("games", f"serverid={g_id}", "*"):
+        remove_game(g_id)
+    ouch = session['u_name'] == request.args.get('imp')
+    updateStat(session['u_name'], ouch)
+    return render_template("imposterwins.html")
+
+@app.route('/imposterloses/<g_id>')
+def imposterloses(g_id):
+    if fetch("games", f"serverid={g_id}", "*"):
+        remove_game(g_id)
+    ouch = session['u_name'] == request.args.get('imp')
+    updateStat(session['u_name'], not ouch)
+    return render_template("imposterloses.html")
+
 @app.route('/game/<g_id>', methods=["GET", "POST"])
 def game(g_id):
-    if exists("games", f"serverid={g_id}"):
+    if fetch("games", f"serverid={g_id}", "*"):
         data = fetch("games", f"serverid={g_id}", "*")
         players = []
         for i in data[0][2:6]:
@@ -69,25 +85,13 @@ def game(g_id):
         elif four == session["u_name"]: playerN = 4
     else:
         return redirect("/")
+    
     if request.method == 'POST':
-        if exists("games", f"serverid={g_id}"):
-            remove_game(str(g_id))
-            if request.get_json()["imp"]:
-                if imp == session["u_name"]:
-                    updateStat(session["u_name"], True)
-                else:
-                    updateStat(session["u_name"], False)
-                return jsonify({
-                    'success': True,
-                }), 200
-            else:
-                if imp == session["u_name"]:
-                    updateStat(session["u_name"], False)
-                else:
-                    updateStat(session["u_name"], True)
-                return jsonify({
-                    'success': True,
-                }), 200
+        data = request.get_json()
+        return jsonify({
+            'success': True,
+        }), 200
+
 
     if imp == session["u_name"]:
         return render_template("imposter.html", category=data[0][6], word="YOU ARE THE IMPOSTER",

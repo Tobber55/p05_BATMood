@@ -108,3 +108,9 @@ alvins -- 2026-06-12 01:14
 alvinS -- 2026-06-12 11:47
     - Prototype for wins loss tracking
     - Guest reworked
+
+alvinS -- 2026-06-13 00:52
+    - Fixed bug where multiple post requests were sent at the same time with reworked
+    - New result pages
+    - Finished prototype for win loss tracking
+    - Mild CSS changes to center wording and making font more readable

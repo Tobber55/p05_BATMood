@@ -1,7 +1,11 @@
 function mouseDown(word) {
-  document.getElementById("role").innerHTML = word;
+  if (document.getElementById("role")){
+    document.getElementById("role").innerHTML = word;
+  }
 }
 
 function mouseUp() {
-  document.getElementById("role").innerHTML = "";
+  if (document.getElementById("role")){
+    document.getElementById("role").innerHTML = "";
+  }
 }

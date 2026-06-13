@@ -35,6 +35,7 @@
       var voted = 0
       var confirmed = false
       var sus = 0
+      var gameEnd = false
       window.addEventListener('beforeunload', (event) => {
           if (String(voted) != playerM){
             event.preventDefault();
@@ -93,8 +94,9 @@
       </script>
     <div onmousedown="mouseDown(word)" class="card" style="width: 18rem; margin-right: auto; margin-left: auto; margin-bottom: 10vh;">
       <div class="card-body">
-        <h5 class="card-title">Category: {{ category }} (Hold To Show)</h5>
-        <p id="role" class="card-text"></p>
+        <h5 style="text-align: center;" class="card-title">Category: {{ category }}</h5>
+        <p style="text-align: center;">(Hold to Show)</p>
+        <p id="role" style="text-align: center;" class="card-text"></p>
       </div>
     </div>
   </head>
@@ -105,7 +107,7 @@
           <div class="card-header" style="text-align: center;">
             Hint Log
           </div>
-          <ul id="clues" class="list-group list-group-flush" style="list-style-type: none; margin: auto;"></ul>
+          <ul id="clues" class="list-group list-group-flush" style="list-style-type: none; text-align: center; margin: auto;"></ul>
         </div>
       </div>
       <div id="bleh" style="margin:auto;"></div>
@@ -122,7 +124,7 @@
           <div class="card-header" style="text-align: center;">
             Who's Suspicious?
           </div>
-          <div style="margin:auto;"><ul id="vote" class="list-group list-group-flush" style="margin: auto; list-style-type: none;"></ul></div>
+          <div style="text-align: center; margin:auto;"><ul id="vote" class="list-group list-group-flush" style="margin: auto; list-style-type: none;"></ul></div>
         </div>
       </div>
       <script>
@@ -185,7 +187,7 @@
             document.getElementById("vote").innerHTML += `<li><button onclick="confirm()" class="btn btn-secondary">CONFIRM VOTE</button></li>`
           }
 
-          if (voted == parseInt(playerM, 10)){
+          if (voted == parseInt(playerM, 10) && !gameEnd){
             var max = Math.max(onesus, twosus, threesus, foursus)
             var bleh = true
             if (max == onesus && one == imp){bleh = (onesus == twosus || onesus == threesus || onesus == foursus)}
@@ -194,44 +196,52 @@
             else if (max == foursus && four == imp){bleh = (onesus == foursus || foursus == threesus || twosus == foursus)}
 
             socket.emit("gameEnd", {{ g_id }}, Boolean(bleh))
+            gameEnd = true
           }
         }
 
-        function home(){
-          window.location.href = '/';
-        };
-
-        socket.on('gameEnd', function(imp){
-          if (imp){
-            document.getElementById("all").innerHTML = `<div class="d-flex align-items-center justify-content-center" style="font-weight: bold; font-size: larger; flex-direction: column; height: 100vh;">
-        <p> IMPOSTER WINS! </p>
-        <button onclick="home()" class="btn btn-primary" type="submit"> Home </button>
-    </div>`
+        socket.on('gameEnd', function(idk){
+          if (!gameEnd) return;
+          if (idk){
             fetch('/game/{{ g_id }}', {
               method: "POST",
               body: JSON.stringify({
-                imp: true
+                imp: true,
+                name: String(imp)
               }),
               headers: {
                 "Content-type": "application/json; charset=UTF-8"
               }
             })
               .then((response) => response.json())
+              .then((data) => {
+                window.location.href = '/imposterwins/{{ g_id }}?imp=' + imp;
+              })
+              .catch((err) => {
+                if (err instanceof TypeError) {
+                  window.location.href = '/imposterwins/{{ g_id }}?imp=' + imp;
+                }
+              });
           } else{
-            document.getElementById("all").innerHTML = `<div class="d-flex align-items-center justify-content-center" style="font-weight: bold; font-size: larger; flex-direction: column; height: 100vh;">
-        <p> IMPOSTER WAS CAUGHT! </p>
-        <button onclick="home()" class="btn btn-primary" type="submit"> Home </button>
-    </div>`
             fetch('/game/{{ g_id }}', {
               method: "POST",
               body: JSON.stringify({
-                imp: true
+                imp: false,
+                name: String(imp)
               }),
               headers: {
                 "Content-type": "application/json; charset=UTF-8"
               }
             })
               .then((response) => response.json())
+              .then(() => {
+                window.location.href = '/imposterloses/{{ g_id }}?imp=' + imp;
+              })
+              .catch((err) => {
+                if (err instanceof TypeError) {
+                  window.location.href = '/imposterloses/{{ g_id }}?imp=' + imp;
+                }
+              });
           }
         });
 
@@ -243,7 +253,6 @@
           voted = parseInt(data.v, 10)
           updateVote()
         });
-
         updateVote()
 
       </script>
