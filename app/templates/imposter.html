@@ -194,15 +194,24 @@
             else if (max == twosus && two == imp){bleh = (onesus == twosus || twosus == threesus || twosus == foursus)}
             else if (max == threesus && three == imp){bleh = (onesus == threesus || threesus == twosus || threesus == foursus)}
             else if (max == foursus && four == imp){bleh = (onesus == foursus || foursus == threesus || twosus == foursus)}
-
-            socket.emit("gameEnd", {{ g_id }}, Boolean(bleh))
             gameEnd = true
+            socket.emit("gameEnd", {{ g_id }}, Boolean(bleh))
+            
           }
         }
 
         socket.on('gameEnd', function(idk){
-          if (!gameEnd) return;
+          if (!gameEnd) {
+            return;
+          } 
+          var link = ""
           if (idk){
+            link = '/imposterwins/{{ g_id }}?imp=' + imp;
+          }
+          else{
+            link = '/imposterloses/{{ g_id }}?imp=' + imp;
+          }
+          if (player == "1"){
             fetch('/game/{{ g_id }}', {
               method: "POST",
               body: JSON.stringify({
@@ -215,35 +224,18 @@
             })
               .then((response) => response.json())
               .then((data) => {
-                window.location.href = '/imposterwins/{{ g_id }}?imp=' + imp;
+                window.location.href = link;
               })
               .catch((err) => {
                 if (err instanceof TypeError) {
-                  window.location.href = '/imposterwins/{{ g_id }}?imp=' + imp;
-                }
-              });
-          } else{
-            fetch('/game/{{ g_id }}', {
-              method: "POST",
-              body: JSON.stringify({
-                imp: false,
-                name: String(imp)
-              }),
-              headers: {
-                "Content-type": "application/json; charset=UTF-8"
-              }
-            })
-              .then((response) => response.json())
-              .then(() => {
-                window.location.href = '/imposterloses/{{ g_id }}?imp=' + imp;
-              })
-              .catch((err) => {
-                if (err instanceof TypeError) {
-                  window.location.href = '/imposterloses/{{ g_id }}?imp=' + imp;
+                  window.location.href = link;
                 }
               });
           }
+          window.location.href = link;
+
         });
+          
 
         socket.on('vote', function(data){
           onesus = parseInt(data.one, 10)

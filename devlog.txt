@@ -114,3 +114,6 @@ alvinS -- 2026-06-13 00:52
     - New result pages
     - Finished prototype for win loss tracking
     - Mild CSS changes to center wording and making font more readable
+
+alvinS -- 2026-06-13 19:04
+    - Another bug fix, reinforced that only a single post request can be sent
