@@ -48,7 +48,7 @@ alvinS -- 2026-05-14 11:47
     - Changed database for servers and updated new game route.
 
 thamidurR -- 2026-05-14 11:47
-    - Researched word lists for Imposter.
+    - Researched word lists for Imposter
 
 alvinS -- 2026-05-14 12:33
     - Flask app passes data to javascript to display proper role and category on imposter page.
@@ -57,10 +57,10 @@ bogdanS -- 2026-05-14 21:37
     - Added login functionality
 
 thamidurR -- 2026-05-14 9:45
-    - Finalized and added word list for Imposter.
+    - Finalized and added word list for Imposter
 
 thamidurR -- 2026-05-17 11:08
-    - Finished ParseWords and RandomizeWord functions.
+    - Finished ParseWords and RandomizeWord functions
 
 alvinS -- 2026-05-19 11:42
     - Different card for imposters and other players.
@@ -74,10 +74,19 @@ alvinS -- 2026-05-20 11:21
     - Added cards showing for each player
     - passed player data to html
 
+thamidurR -- 2026-05-21 11:08
+    - Created the image to be displayed on login and register.
+
 bogdanS -- 2026-05-21 11:28
     - Added host feature (host is the creator of the lobby and starts the game)
     - Handing off to Alvin to send everybody to the game
     - Next on the agenda: guests
+
+thamidurR -- 2026-05-22 11:08
+    - Worked on the frontend for login
+
+thamidurR -- 2026-05-25 11:08
+    - Got the game working.
 
 alvinS -- 2026-05-27 09:25
     - Added tester for room joining
@@ -91,6 +100,18 @@ alvinS -- 2026-05-28 21:59
 alvinS -- 2026-05-28 22:45
     - Better dynamic update of input log
 
+thamidurR -- 2026-05-28 11:08
+    - Got websockets working on droplet
+
+thamidurR -- 2026-06-02 11:08
+    - Worked on the frontend for register
+
+thamidurR -- 2026-06-03 11:08
+    - Fixed register.html and made sure the main branch works on droplet
+
+thamidurR -- 2026-06-05 11:08
+    - Worked on frontend for the homepage
+
 alvinS -- 2026-06-09 20:14
     - Chooses imposter
     - Function to change turn
@@ -101,6 +122,9 @@ alvinS -- 2026-06-10 00:04
     - Voting system
     - Displays who wins at end of game
     - Small CSS update
+
+thamidurR -- 2026-06-11 11:08
+    - Fixed throughout and added BOBMood
 
 alvins -- 2026-06-12 01:14
     - Game back to home at end of game
