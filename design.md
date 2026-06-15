@@ -2,7 +2,7 @@
 
 ## TNPG: BATMood
 ## Project: BATMood Games
-## Target ship date: 2026-05-26
+## Target ship date: 2026-06-14
 
 #### Roster:
 
@@ -76,21 +76,19 @@ Our team prefers the ease of use and aesthetic possibilities of Bootstrap and we
 
 | Team Member | Primary Ownership | Secondary Ownership | Specific Deliverables |
 |---|---|---|---|
-| Thamidur Rahman | Flask App | Game Script | Plan for unique game and how it will be implemented. |
-| Alvin Sze | Database | Game Script | Database to store player info and authenticate. |
-| Bogdan Sotnikov | Flask App | JS | System to house multiple links for different lobbies. |
-| Matthew Ciu | CSS | HTML | |
+| Thamidur Rahman | Flask App | CSS | CSS for login and register. |
+| Alvin Sze | Database | Game Script | Database to store player info and authenticate.  Javascript for websockets.|
+| Bogdan Sotnikov | Flask App | Database | System to house multiple links for different lobbies. |
+| Matthew Ciu | CSS | HTML | CSS for homepage.|
 
 ---
 
 # Component map
-
-<img width="975" height="460" alt="image" src="https://github.com/user-attachments/assets/0b7da6ab-8032-41ff-9c92-0693bb751d0c" />
+<img width="973" height="506" alt="Screenshot 2026-06-14 225857" src="https://github.com/user-attachments/assets/77adeca0-011c-4a94-81ab-fbe6e4dc41b7" />
 
 
 # Site map
-
-<img width="349" height="711" alt="image" src="https://github.com/user-attachments/assets/6820bffe-f7d8-467e-ac43-05884ad7444d" />
+<img width="357" height="739" alt="Screenshot 2026-06-14 225156" src="https://github.com/user-attachments/assets/630581f6-20f6-4504-a930-ea1a7596d065" />
 
 
 ## Key User Stories
@@ -112,14 +110,16 @@ As a player I want to compete with others, see how others perform, and see how t
 | SERVER DB | TYPE | |
 |---|---|---|
 | serverID | TEXT |PK |
-| password | TEXT | |
+| gameID | TEXT | |
 | gameID | INT | |
 | player1 | TEXT | |
 | player2 | TEXT | |
 | player3 | TEXT | |
 | player4 | TEXT | |
-| player5 | TEXT | |
-| player6 | TEXT | |
+| category | TEXT | |
+| word | TEXT | |
+| firstPlayer | int | |
+| specialPlayer | TEXT | |
 
 
 # Testing Plan
@@ -128,7 +128,7 @@ We will be sure to test that only authorized users can enter in specific links.
 # Timeline
 ## Week 1 Goals: Smooth database updates within a game.
 ## Week 2 Goals: Player authorization and splitting of lobbies to different routes.
-## Week 3 Goals: Creating rules and displaying games.
+## Week 3 Goals: Javascript for websockets and dynamic updates.
 ## Internal Deadlines: Front end for each part.
 
 
@@ -139,10 +139,9 @@ Project is considered complete when all of the following are true:
 3. Wins and losses are tracked onto player profiles which can be displayed.
 
 # Open Questions
-We are unsure if all games will be of our own design.
 
 # Appendix
 Current inspirations: Jackbox, Imposter, Tapple.
 
 # Other
-We love this assignment!
+We love this assignment (considerably less)!
